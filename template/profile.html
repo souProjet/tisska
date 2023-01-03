@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - Mes informations - Personnalisation Textile Et Objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/profile.css" />
+
+    <!-- balise meta contenant le token unique de l'utilisateur -->
+    <meta name="token" content="{{token}}">
+
+</head>
+
+<body class="shop_page">
+    {{header}}
+
+    <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="ec-shop-rightside col-lg-12 col-md-12">
+                    <div class="ec-vendor-dashboard-card ec-vendor-setting-card">
+                        <div class="ec-vendor-card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="ec-vendor-block-profile">
+                                        <div class="ec-vendor-block-img space-bottom-30">
+                                            <div class="ec-vendor-block-bg">
+                                            </div>
+                                            <div class="ec-vendor-block-detail">
+                                                <img class="v-img" src="{{avatarURL}}" alt="vendor image">
+                                                <h5 class="name">{{username}}</h5>
+                                            </div>
+                                        </div>
+                                        <h5>Informations personnelles (modifiables)</h5>
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="firstname">{{firstname}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="lastname">{{lastname}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="email">{{email}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="address">{{address}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="city">{{city}}</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                    <h6 contenteditable="true" class="editable-info" data-name="zip">{{zip}}</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <p class="error-field" style="color:red;"></p>
+                                                <button class="btn btn-primary btn-sm" id="save-infos">Enregistrer</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{footer}}
+
+    <div class="ec-nav-toolbar">
+        <div class="container">
+            <div class="ec-nav-panel">
+                {{adminBtnMobile}}
+                <div class="ec-nav-panel-icons">
+                    <a class="toggle-cart ec-header-btn ec-side-toggle cart-btn">
+                        <img src="/public/img/cart.svg" class="svg_img header_svg" alt="icon">
+                        <!-- <span class="ec-cart-noti ec-header-count cart-count-lable">3</span> -->
+                    </a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="/" class="ec-header-btn"><img src="/public/img/home.svg" class="svg_img header_svg" alt="icon"></a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="{{avatarLink}}" class="ec-header-btn"><img src="{{avatarURL}}" class="svg_img header_svg ec-user-avatar" alt="icon"></a>
+                </div>
+                {{mobileLogoutBtn}}
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/cart-module.js"></script>
+    <script src="/public/js/profile.js"></script>
+
+</body>
+
+</html>

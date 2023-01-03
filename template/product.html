@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - {{productName}} - Personnalisation Textile Et Objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/product.css" />
+
+    <!-- balise meta contenant le token unique de l'utilisateur -->
+    <meta name="token" content="{{token}}">
+    <!-- balise meta contenant l'id du produit -->
+    <meta name="product_id" content="{{productId}}">
+</head>
+
+<body>
+    {{header}}
+
+
+    <section class="ec-page-content section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="ec-pro-rightside ec-common-rightside col-lg-12 col-md-12">
+
+                    <div class="single-pro-block">
+                        <div class="single-pro-inner">
+                            <div class="row">
+                                <div class="single-pro-img single-pro-img-no-sidebar">
+                                    <div class="single-product-scroll">
+                                        <div class="single-product-cover">
+                                            {{productCover}}
+                                        </div>
+                                        <div class="single-nav-thumb">
+                                            {{productThumbs}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-pro-desc single-pro-desc-no-sidebar">
+                                    <div class="single-pro-content">
+                                        <h5 class="ec-single-title">{{productName}}</h5>
+                                        <div class="ec-single-desc">{{productDescription}}</div>
+
+
+                                        <div class="ec-single-price-stoke">
+                                            <div class="ec-single-price">
+                                                <span class="new-price">{{productPrice}}</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="ec-pro-variation">
+                                            Vous pourrez choisir vos options une fois le produit ajouté au panier
+                                        </div>
+                                        <div class="ec-single-qty">
+
+                                            <div class="qty-plus-minus">
+                                                <div class="dec ec_qtybtn dec-main">-</div>
+                                                <input data-productid="{{productId}}" data-incart="false" class="qty-input qty-input-main" type="text" name="ec_qtybtn" value="1" />
+                                                <div class="inc ec_qtybtn inc-main">+</div>
+                                            </div>
+                                            <div class="ec-single-cart ">
+                                                <button class="btn btn-primary">Ajouter au panier</button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ec-single-pro-tab">
+                        <div class="ec-single-pro-tab-wrapper">
+                            <div class="ec-single-pro-tab-nav">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Détails</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-review" role="tablist">Commentaires</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content  ec-single-pro-tab-content">
+                                <div id="ec-spt-nav-details" class="tab-pane fade show active">
+                                    <div class="ec-single-pro-tab-desc">
+                                        <p>{{productDetails}}</p>
+                                    </div>
+                                </div>
+                                <div id="ec-spt-nav-review" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="ec-t-review-wrapper"></div>
+                                        <div class="ec-ratting-content">
+                                            <h3>Ajouter un avis</h3>
+                                            <div class="ec-ratting-form">
+                                                <form>
+                                                    <div class="ec-ratting-input form-submit">
+                                                        <textarea name="your-comment" placeholder="Entrez votre commentaire"></textarea>
+                                                        <button class="btn btn-primary" type="submit" value="Submit">Envoyer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{footer}}
+
+    <div class="ec-nav-toolbar">
+        <div class="container">
+            <div class="ec-nav-panel">
+                {{adminBtnMobile}}
+                <div class="ec-nav-panel-icons">
+                    <a class="toggle-cart ec-header-btn ec-side-toggle cart-btn">
+                        <img src="/public/img/cart.svg" class="svg_img header_svg" alt="icon">
+                        <!-- <span class="ec-cart-noti ec-header-count cart-count-lable">3</span> -->
+                    </a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="/" class="ec-header-btn"><img src="/public/img/home.svg" class="svg_img header_svg" alt="icon"></a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="{{avatarLink}}" class="ec-header-btn"><img src="{{avatarURL}}" class="svg_img header_svg ec-user-avatar" alt="icon"></a>
+                </div>
+
+                {{mobileLogoutBtn}}
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/js/jquery-3.5.1.min.js"></script>
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/jquery.zoom.min.js"></script>
+    <script src="/public/js/slick.min.js"></script>
+    <script src="/public/js/cart-module.js"></script>
+    <script src="/public/js/product.js"></script>
+
+</body>
+
+</html>

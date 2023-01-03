@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ADMINISTRATION - Tiss'Ka</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
+
+    <meta name="token" content="{{token}}">
+</head>
+
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-light ec-header-light" id="body">
+
+    {{header}}
+
+    <div class="wrapper">
+        <div class="ec-page-wrapper">
+
+            <div class="ec-content-wrapper">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-1">
+                                <div class="card-body">
+                                    <h2 class="mb-1">{{nbUsers}}</h2>
+                                    <p>Nombre de comptes créés</p>
+                                    <span class="mdi mdi-account-arrow-left"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-2">
+                                <div class="card-body">
+                                    <h2 class="mb-1">{{nbProducts}}
+                                        <p>Nombre de produits</p>
+                                        <span class="mdi mdi-account-clock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-3">
+                                <div class="card-body">
+                                    <h2 class="mb-1">{{nbOrders}}</h2>
+                                    <p>Commande ce mois-ci</p>
+                                    <span class="mdi mdi-package-variant"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-4">
+                                <div class="card-body">
+                                    <h2 class="mb-1">{{revenue}} €</h2>
+                                    <p>Revenu ce mois-ci</p>
+                                    <span class="mdi mdi-currency-usd"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12 p-b-15">
+                            <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                                <div class="card-header justify-content-between">
+                                    <h2>Commande en attente</h2>
+                                </div>
+                                <div class="card-body pt-0 pb-5">
+                                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom de la commande</th>
+                                                <th>Options</th>
+                                                <th>Date</th>
+                                                <th>Prix</th>
+                                                <th>Nom du client</th>
+                                                <th>Adresse</th>
+                                                <th>Email</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="orders-list-container">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12 col-12 p-b-15">
+                            <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                                <div class="card-header justify-content-between">
+                                    <h2>Code promo</h2>
+                                </div>
+                                <div class="card-body pt-0 pb-5">
+                                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>code</th>
+                                                <th>réduction</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="discount-list-container">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex flex-wrap bg-white">
+                                    <a onclick="addDiscount()" class="text-uppercase py-3">Ajouter un code</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{footer}}
+    <script src="/public/js/admin.js"></script>
+</body>
+
+</html>
