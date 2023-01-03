@@ -4,10 +4,7 @@ let Product = class Product {
         this.fs = fs;
         this.createImage = createImage;
         this.loadImage = loadImage;
-<<<<<<< HEAD
         this.HOME = process.argv[2] == '--dev' ? __dirname : '/home/tisska';
-=======
->>>>>>> main
     }
     addProduct(data) {
         return new Promise((resolve, reject) => {
@@ -29,13 +26,8 @@ let Product = class Product {
 
             //upload thumbs in folder ./products-thumbs/ with id as name
             //check if folder with id exists
-<<<<<<< HEAD
             if (!this.fs.existsSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id)) {
                 this.fs.mkdirSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id);
-=======
-            if (!this.fs.existsSync('/home/tisska/products-thumbs/' + id)) {
-                this.fs.mkdirSync('/home/tisska/products-thumbs/' + id);
->>>>>>> main
             }
             // let thumbs = {
             //     'thumb-0':{},
@@ -45,11 +37,7 @@ let Product = class Product {
                 let buffer = thumbs[item].data;
 
                 let name = id + '-' + index + '.' + thumbs[item].mimetype.split('/')[1];
-<<<<<<< HEAD
                 this.fs.writeFileSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id + '/' + name : this.HOME + '/products-thumbs/' + id + '/' + name, buffer, (err) => {
-=======
-                this.fs.writeFileSync('/home/tisska/products-thumbs/' + id + '/' + name, buffer, (err) => {
->>>>>>> main
                     if (err) reject(err);
                 });
 
