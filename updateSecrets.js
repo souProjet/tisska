@@ -10,7 +10,7 @@ let data = {
     "host": "localhost",
     "user": "tisska",
     "password": password,
-    "database": "ecommerce",
+    "database": "tisska",
     "STRIPE_SECRET_KEY": stripe,
     "STRIPE_PUBLISHABLE_KEY": "pk_live_51HiGoQJqkELSvnH0SZyPH1vQrCb2hIwRHKlmJcgvIxSItL0RWqPFLP0aWr8eSA0BDiQjMBTrGbZ1xmnyVIDUcVnQ00x5SCVpsV"
 }
