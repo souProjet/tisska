@@ -1,0 +1,183 @@
+.ec-side-cart.ec-open {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+    -webkit-transform: translateX(0) !important;
+    transform: translateX(0) !important;
+}
+
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+.ec-header-bottons .ec-header-btn .ec-header-count {
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    position: absolute;
+    z-index: 2;
+    top: auto;
+    right: 0;
+    height: 20px;
+    min-width: 20px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 10px;
+    background-color: #777777;
+    bottom: 0;
+    padding: 0 4px;
+}
+
+@media only screen and (max-width: 575px) {
+    .ec-nav-toolbar .ec-nav-panel .ec-nav-panel-icons a .ec-cart-noti {
+        width: 15px;
+        height: 15px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 12px;
+        background-color: rgb(255, 103, 103);
+    }
+}
+
+.eccart-pro-items li .sidekka_pro_img img {
+    max-width: 100%;
+}
+
+.eccart-pro-items li .sidekka_pro_img {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 20%;
+    flex: 1 0 20%;
+}
+
+.eccart-pro-items li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.eccart-pro-items li .ec-pro-content {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 70%;
+    flex: 1 0 70%;
+    padding-left: 15px;
+    overflow: hidden;
+}
+
+.eccart-pro-items li .ec-pro-content .cart_pro_title {
+    width: 100%;
+    padding-right: 30px;
+    text-decoration: none;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 15px;
+    line-height: 15px;
+    font-weight: 400;
+}
+
+.eccart-pro-items li .ec-pro-content .cart-price span {
+    color: #777;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.eccart-pro-items li .ec-pro-content .cart-price {
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+.eccart-pro-items li .ec-pro-content .remove {
+    line-height: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 9px;
+    color: red;
+    font-size: 16px;
+    background: #ffffff;
+}
+
+.eccart-pro-items li .ec-pro-content .qty-plus-minus {
+    border: 1px solid #eeeeee;
+    display: inline-block;
+    height: 35px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 85px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 7px 0;
+    margin-top: 7px;
+}
+
+.eccart-pro-items li .ec-pro-content .qty-plus-minus input.qty-input {
+    background: transparent none repeat scroll 0 0;
+    border: medium none;
+    color: #777;
+    float: left;
+    font-size: 14px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 32px;
+    outline: none;
+    font-weight: 400;
+    line-height: 35px;
+}
+
+.eccart-pro-items li .ec-pro-content .qty-plus-minus .dec.ec_qtybtn {
+    border-right: 1px solid #eeeeee;
+}
+
+.eccart-pro-items li .ec-pro-content .qty-plus-minus .ec_qtybtn,
+.eccart-pro-items li .ec-pro-content .qty-plus-minus .ec_qtybtn {
+    width: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
+    font-size: 20px;
+    color: #777;
+}
+
+.eccart-pro-items li .ec-pro-content .qty-plus-minus .inc.ec_qtybtn {
+    border-left: 1px solid #eeeeee;
+}

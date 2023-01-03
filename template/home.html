@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - Personnalisation Textile Et Objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/home.css" />
+
+    <!-- balise meta contenant le token unique de l'utilisateur -->
+    <meta name="token" content="{{token}}">
+</head>
+
+<body>
+    {{header}}
+
+
+    <div class="banner-container" style="background-image: url(/public/img/banner.jpg); height:471px;width:100%;background-size:cover; background-repeat:no-repeat;"></div>
+    <!-- <div class="sticky-header-next-sec ec-main-slider section section-space-pb">
+        <div class="ec-slider swiper-container main-slider-nav main-slider-dot swiper-container-initialized swiper-container-horizontal">
+            <div class="swiper-wrapper" id="swiper-wrapper-83ca31f7c4f4210f2" aria-live="off" style="transition: all 0ms ease 0s; transform: translate3d(-2670px, 0px, 0px);">
+                <div class="ec-slide-item swiper-slide d-flex ec-slide-2 swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="1" role="group" aria-label="1 / 4" style="width: 1335px;"></div>
+                <div class="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="0" role="group" aria-label="2 / 4" style="width: 1335px;"></div>
+                <div class="ec-slide-item swiper-slide d-flex ec-slide-2 swiper-slide-active" data-swiper-slide-index="1" role="group" aria-label="3 / 4" style="width: 1335px;"></div>
+                <div class="ec-slide-item swiper-slide d-flex ec-slide-1 swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev" data-swiper-slide-index="0" role="group" aria-label="4 / 4" style="width: 1335px;"></div>
+            </div>
+            <div class="swiper-pagination swiper-pagination-white swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 2"></span></div>
+
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+    </div> -->
+
+    <section class="section ec-product-tab section-space-p" id="collection">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab-pro-for-all">
+                            <div class="row ec-products-container">
+                                {{products}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{footer}}
+
+
+    <div class="ec-nav-toolbar">
+        <div class="container">
+            <div class="ec-nav-panel">
+                {{adminBtnMobile}}
+                <div class="ec-nav-panel-icons">
+                    <a class="toggle-cart ec-header-btn ec-side-toggle cart-btn">
+                        <img src="/public/img/cart.svg" class="svg_img header_svg" alt="icon">
+                    </a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="/" class="ec-header-btn"><img src="/public/img/home.svg" class="svg_img header_svg" alt="icon"></a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="{{avatarLink}}" class="ec-header-btn"><img src="{{avatarURL}}" class="svg_img header_svg ec-user-avatar" alt="icon"></a>
+                </div>
+                {{mobileLogoutBtn}}
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/public/js/cart-module.js"></script>
+    <script src="/public/js/home.js"></script>
+
+</body>
+
+</html>

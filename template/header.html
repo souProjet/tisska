@@ -1,0 +1,104 @@
+<header class="ec-header">
+    <div class="ec-header-bottom d-none d-lg-block">
+        <div class="container position-relative">
+            <div class="row">
+                <div class="ec-flex">
+                    <div class="align-self-center">
+                        <div class="header-logo">
+                            <a href="/">
+                                <img src="/public/img/logo.png" alt="Site Logo">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="align-self-center">
+                        <div class="ec-header-bottons">
+
+                            {{adminBtn}}
+
+                            <a class="ec-header-btn ec-side-toggle cart-btn">
+                                <div class="header-icon">
+                                    <img src="/public/img/cart.svg" class="svg_img header_svg" alt="">
+                                </div>
+                            </a>
+
+
+                            <div class="ec-header-user dropdown">
+                                <button class="dropdown-toggle ec-user-profil" data-bs-toggle="dropdown">
+                                    <img src="{{avatarURL}}" class="svg_img header_svg ec-user-avatar" alt="">
+                                    {{username}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right user-option-dropdown">
+                                    {{dropdownItems}}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ec-header-bottom d-lg-none">
+        <div class="container position-relative">
+            <div class="row ">
+                <div class="col">
+                    <div class="header-logo">
+                        <a href="/">
+                            <img src="/public/img/logo.png" alt="Site Logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="ec-side-cart-overlay"></div>
+
+<div id="ec-side-cart" class="ec-side-cart">
+    <div class="ec-cart-inner">
+        <div class="ec-cart-top">
+            <div class="ec-cart-title">
+                <span class="cart_title">Mon panier</span>
+                <button class="ec-close">&CircleTimes;</button>
+            </div>
+            <ul class="eccart-pro-items cart-container">
+                Panier vide
+            </ul>
+        </div>
+        <div class="ec-cart-bottom">
+            <div class="cart-sub-total">
+                <table class="table cart-table">
+                    <tbody>
+                        <tr>
+                            <td class="text-left">Sous-total :</td>
+                            <td class="text-right cart-subtotal">0€</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Livraison :</td>
+                            <td class="text-right cart-shipping">0€</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Réductions :</td>
+                            <td class="text-right cart-discount"><a style="color:red;cursor:pointer;" class="ec-checkout-coupan">Ajouter un coupon</a></td>
+                        </tr>
+                        <div class="ec-checkout-coupan-content">
+                            <form class="ec-checkout-coupan-form">
+                                <input class="ec-coupan" type="text" required="" placeholder="Entrer le code" name="ec-coupan" value="">
+                                <button class="ec-coupan-btn button btn-primary" type="submit" name="apply" value="">Appliquer</button>
+                            </form>
+                        </div>
+                        <tr>
+                            <td class="text-left">Total :</td>
+                            <td class="text-right primary-color cart-total">0€</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="cart_btn">
+                <!-- <a href="/cart" class="btn btn-primary">Panier</a> -->
+                <a onclick="cartModule.checkout()" class="btn btn-secondary">Commander</a>
+            </div>
+        </div>
+    </div>
+</div>

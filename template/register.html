@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - Connexion - Personnalisation de textile et objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/register.css" />
+
+</head>
+
+<body class="register_page">
+
+
+    <section class="ec-page-content section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="section-title">
+                        <h2 class="ec-bg-title">Inscription</h2>
+                        <h2 class="ec-title">Inscription</h2>
+                    </div>
+                </div>
+                <div class="ec-register-wrapper">
+                    <div class="ec-register-container">
+                        <div class="ec-register-form">
+                            <form method="post">
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Prénom</label>
+                                    <input type="text" name="firstname" placeholder="Entrez votre prénom" required />
+                                </span>
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Nom</label>
+                                    <input type="text" name="lastname" placeholder="Entrez votre nom de famille" required />
+                                </span>
+                                <span class="ec-register-wrap">
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="Entrez votre adresse e-mail..." required />
+                                </span>
+
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Mot de passe</label>
+                                    <input type="password" name="password" placeholder="Entrez votre mot de passe" required />
+                                </span>
+
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Mot de passe de confirmation</label>
+                                    <input type="password" name="passwordVerify" placeholder="Confirmer votre mot de passe" required />
+                                </span>
+
+                                <span class="ec-register-wrap">
+                                    <label>Adresse</label>
+                                    <input type="text" name="address" placeholder="Ligne d'adresse 1" />
+                                </span>
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Ville</label>
+                                    <input type="text" name="city" placeholder="Votre ville" />
+
+                                </span>
+                                <span class="ec-register-wrap ec-register-half">
+                                    <label>Code postal</label>
+                                    <input type="text" name="zip" placeholder="Code postal" />
+                                </span>
+
+                                <span style="color:red" class="help-block with-errors error-msg"></span>
+                                <span class="ec-register-wrap ec-register-btn">
+                                    <button class="btn btn-primary" type="submit">Je m'inscris !</button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{footer}}
+
+    <script src="/public/js/register.js"></script>
+</body>
+
+</html>

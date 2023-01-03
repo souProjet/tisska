@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - Commander - Personnalisation Textile Et Objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/checkout.css" />
+    <!-- balise meta contenant le token unique de l'utilisateur -->
+    <meta name="token" content="{{token}}">
+</head>
+
+<body class="checkout_page">
+    {{header}}
+    <section class="ec-page-content section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="ec-checkout-leftside col-lg-8 col-md-12 ">
+                    <!-- checkout content Start -->
+                    <div class="ec-checkout-content">
+                        <div class="ec-checkout-inner">
+                            <div class="ec-checkout-wrap margin-bottom-30 padding-bottom-3">
+                                <div class="ec-checkout-block ec-check-bill">
+                                    <h3 class="ec-checkout-title">Détails de facturation</h3>
+                                    <div class="ec-bl-block-content">
+                                        <div class="ec-check-bill-form">
+                                            <form action="#" method="post">
+                                                <span class="ec-bill-wrap">
+                                                    <label>Adresse Email</label>
+                                                    <input type="email" name="email" placeholder="Entrer votre adresse email" required />
+                                                </span>
+                                                <span class="ec-bill-wrap ec-bill-half">
+                                                    <label>Prenom</label>
+                                                    <input type="text" name="firstname" placeholder="Entrer votre prénom" required />
+                                                </span>
+                                                <span class="ec-bill-wrap ec-bill-half">
+                                                    <label>Nom</label>
+                                                    <input type="text" name="lastname" placeholder="Entrer votre nom" required />
+                                                </span>
+                                                <span class="ec-bill-wrap">
+                                                    <label>Adresse</label>
+                                                    <input type="text" name="address" placeholder="Entrer votre adresse" required />
+                                                </span>
+                                                <span class="ec-bill-wrap ec-bill-half">
+                                                    <label>Ville</label>
+                                                    <input type="text" name="city" placeholder="Entrer votre ville" required />
+                                                </span>
+                                                <span class="ec-bill-wrap ec-bill-half">
+                                                    <label>Code postal</label>
+                                                    <input type="text" name="postalcode" placeholder="Entrer votre code postal" required />
+                                                </span>
+                                                <div id="card-element" style="background-color: transparent;border: 1px solid #ededed;color: #444444;font-size: 14px;margin-bottom: 26px;padding: 2%;width: 100%;outline: none;height: 50px;"></div>
+                                                <div id="card-errors" style="color:red;" role="alert"></div>
+                                                <div id="card-success" style="color:green;" role="alert"></div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <span class="ec-check-order-btn">
+                                <a class="btn btn-primary pay-btn-stripe">Payer</a>
+                              
+                            </span>
+
+                        </div>
+                    </div>
+                    <!--cart content End -->
+                </div>
+                <!-- Sidebar Area Start -->
+                <div class="ec-checkout-rightside col-lg-4 col-md-12">
+                    <div class="ec-sidebar-wrap">
+                        <div class="ec-sidebar-block">
+                            <div class="ec-sb-title">
+                                <h3 class="ec-sidebar-title">Résumé de la commande</h3>
+                            </div>
+                            <div class="ec-sb-block-content">
+                                <div class="ec-checkout-summary">
+                                    <div>
+                                        <span class="text-left">Sous-total</span>
+                                        <span class="text-right subtotal"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-left">Livraison</span>
+                                        <span class="text-right shipping"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-left">Coupons de réduction</span>
+                                        <span class="text-right discount"></span>
+                                    </div>
+                                    <div class="ec-checkout-summary-total">
+                                        <span class="text-left">Montant total</span>
+                                        <span class="text-right total"></span>
+                                    </div>
+                                </div>
+                                <div class="ec-checkout-pro">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ec-sidebar-wrap ec-check-pay-img-wrap">
+                        <div class="ec-sidebar-block">
+                            <div class="ec-sb-title">
+                                <h3 class="ec-sidebar-title">Méthodes de paiement</h3>
+                            </div>
+                            <div class="ec-sb-block-content">
+                                <div class="ec-check-pay-img-inner">
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment1.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment2.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment3.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment4.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment5.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment6.png" alt="">
+                                    </div>
+                                    <div class="ec-check-pay-img">
+                                        <img src="/public/img/payment7.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {{footer}}
+    <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/cart-module.js"></script>
+    <script src="/public/js/checkout.js"></script>
+
+</body>
+
+</html>

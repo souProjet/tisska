@@ -1,0 +1,232 @@
+.ec-modal-window {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-100px);
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -200px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    width: 600px;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+
+/*responsive*/
+
+@media screen and (max-width: 600px) {
+    .ec-modal-window {
+        width: 90%;
+        margin-left: -45%;
+    }
+}
+
+.ec-modal-window.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ec-modal-header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.ec-modal-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.ec-modal-close {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 20px;
+    text-align: center;
+    top: 20px;
+    width: 30px;
+}
+
+.ec-modal-body {
+    margin-bottom: 20px;
+}
+
+.ec-modal-footer {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.ec-modal-footer .ec-btn-validate {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 20px;
+    padding: 0 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.ec-modal-footer .ec-btn-validate:hover {
+    background: #dff0d8;
+}
+
+.ec-modal-footer .ec-btn-validate:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.ec-modal-footer .ec-btn-validate:active {
+    background: #d0e9c6;
+}
+
+.ec-modal-footer .ec-btn-cancel {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.ec-modal-footer .ec-btn-cancel:hover {
+    background: #f2dede;
+}
+
+.ec-modal-footer .ec-btn-cancel:active {
+    background: #ebcccc;
+}
+
+
+/* select element in HTML */
+
+.ec-modal-select {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.ec-modal-select:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.ec-modal-select::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.ec-modal-select[disabled],
+.ec-modal-select[readonly],
+fieldset[disabled] .ec-modal-select {
+    background-color: #eee;
+    opacity: 1;
+}
+
+.ec-modal-select[disabled],
+fieldset[disabled] .ec-modal-select {
+    cursor: not-allowed;
+}
+
+.ec-modal-select::-moz-placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.ec-modal-select:-ms-input-placeholder {
+    color: #999;
+}
+
+.ec-modal-select::-webkit-input-placeholder {
+    color: #999;
+}
+
+.ec-modal-select::-ms-expand {
+    border: 0;
+    background-color: transparent;
+}
+
+.ec-modal-select:focus::-ms-value {
+    color: #212121;
+    background-color: #fff;
+}
+
+.ec-modal-select:hover {
+    border-color: #66afe9;
+}
+
+.ec-modal-select:active {
+    border-color: #66afe9;
+}
+
+.ec-modal-select:active {
+    border-color: #66afe9;
+}
+
+.ec-modal-select option {
+    color: #000;
+}
+
+.ec-modal-option-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+/* ces élement dans le .ec-modal-option-container et doivent être alignés à gauche */
+
+.ec-modal-option-label {
+    width: 20%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.ec-modal-option-select {
+    width: 80%;
+}
