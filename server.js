@@ -33,6 +33,7 @@ app.use(cookieParser()); // for parsing cookies
 app.use(fileupload()); // for parsing files
 app.use('/public', express.static(__dirname + '/assets')); // for parsing static files (css, js, images, etc...)
 
+
 //#############################################################################################################################
 //                                               CONNEXION A LA BASE DE DONNEES
 //#############################################################################################################################
