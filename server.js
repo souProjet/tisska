@@ -294,7 +294,7 @@ app.get('/product/:id', (req, res) => {
                         html = html.replace(/{{productPrice}}/gm, product.price.toFixed(2).replace('.', ',') + '€');
 
                         //get all thumbs of the product with fs and the id when replace {{productCover}} and {{productThumbs}}
-                        let thumbs = fs.readdirSync(__dirname + '/products-thumbs/' + id);
+                        let thumbs = fs.readdirSync('/home/tisska/products-thumbs/' + id);
                         let productCoverHTML = '';
                         let productThumbsHTML = '';
                         for (let i = 0; i < thumbs.length; i++) {
@@ -492,7 +492,7 @@ app.get('/admin', (req, res) => {
 //#############################################################################################################################
 app.get('/avatar/:avatarID', (req, res) => {
     let avatarID = escapeHTML(req.params.avatarID);
-    res.sendFile(__dirname + '/avatars/' + avatarID + '.png');
+    res.sendFile('/home/tisska/avatars/' + avatarID + '.png');
 });
 //product thumb /productthumb/{id}-{number}
 app.get('/product/thumb/:id-:number', (req, res) => {
@@ -501,13 +501,13 @@ app.get('/product/thumb/:id-:number', (req, res) => {
     //send product thumb, path = /products-thumbs/${id}/{id}-{number}.${i dont know}
     //find the file extension
     let extension = '';
-    let files = fs.readdirSync(__dirname + '/products-thumbs/' + id);
+    let files = fs.readdirSync('/home/tisska/products-thumbs/' + id);
     files.forEach((file) => {
         if (file.includes(number)) {
             extension = file.split('.')[1];
         }
     });
-    res.sendFile(__dirname + '/products-thumbs/' + id + '/' + id + '-' + number + '.' + extension);
+    res.sendFile('/home/tisska/products-thumbs/' + id + '/' + id + '-' + number + '.' + extension);
 
 });
 

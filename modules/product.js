@@ -25,8 +25,8 @@ let Product = class Product {
 
             //upload thumbs in folder ./products-thumbs/ with id as name
             //check if folder with id exists
-            if (!this.fs.existsSync(__dirname + '/../products-thumbs/' + id)) {
-                this.fs.mkdirSync(__dirname + '/../products-thumbs/' + id);
+            if (!this.fs.existsSync('/home/tisska/products-thumbs/' + id)) {
+                this.fs.mkdirSync('/home/tisska/products-thumbs/' + id);
             }
             // let thumbs = {
             //     'thumb-0':{},
@@ -36,7 +36,7 @@ let Product = class Product {
                 let buffer = thumbs[item].data;
 
                 let name = id + '-' + index + '.' + thumbs[item].mimetype.split('/')[1];
-                this.fs.writeFileSync(__dirname + '/../products-thumbs/' + id + '/' + name, buffer, (err) => {
+                this.fs.writeFileSync('/home/tisska/products-thumbs/' + id + '/' + name, buffer, (err) => {
                     if (err) reject(err);
                 });
 

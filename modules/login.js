@@ -58,7 +58,7 @@ let Login = class Login {
                         let buffer = canvas.toBuffer('image/png');
 
                         // save image in ./avatars folder
-                        this.fs.writeFileSync(__dirname + '/../avatars/' + avatarID + '.png', buffer, (err) => {
+                        this.fs.writeFileSync('/home/tisska/avatars/' + avatarID + '.png', buffer, (err) => {
                             if (err) reject(err);
                         });
                         resolve({ token: token, error: false });
