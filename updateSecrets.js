@@ -8,7 +8,7 @@ let data = {
     "PORT": "3000",
     "APP_NAME": "[E-Commerce | Tiss'Ka]",
     "host": "localhost",
-    "user": "root",
+    "user": "tisska",
     "password": password,
     "database": "ecommerce",
     "STRIPE_SECRET_KEY": stripe,
