@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 node_modules/
 products-thumbs/
 avatars/
 config.json
-=======
-config.json
-./node_modules/
-./avatars/
-./products-thumbs/
->>>>>>> main

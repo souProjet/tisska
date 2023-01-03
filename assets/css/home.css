@@ -2057,11 +2057,7 @@ button:not(:disabled) {
 
 .ec-slide-1 {
     width: 100%;
-<<<<<<< HEAD
     background-image: url("/public/img/banner.jpg");
-=======
-    background-image: url("/public/img/boule_noel_custom_banner.jpg");
->>>>>>> main
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -2069,11 +2065,7 @@ button:not(:disabled) {
 }
 
 .ec-slide-2 {
-<<<<<<< HEAD
     background-image: url("/public/img/banner.jpg");
-=======
-    background-image: url("/public/img/badge_custom_banner.jpg");
->>>>>>> main
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
