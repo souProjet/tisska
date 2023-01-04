@@ -328,25 +328,27 @@ app.get('/editproduct/:id', (req, res) => {
                                     html = html.replace('{{nameChecked}}', product.options.split(',').includes('name') ? 'checked' : '');
 
                                     let productOptionsHTML = '';
-                                    let options = product.options.split(',').filter(o => o !== 'name');
-                                    for (let i = 0; i < options.length; i++) {
-                                        let choiceHTML = '';
-                                        let optionName = options[i].split('[')[0];
-                                        let choices = options[i].split('[')[1].split(']')[0].split('-');
-                                        for (let j = 0; j < choices.length; j++) {
-                                            choiceHTML += `
+                                    if (product.options.split(',').filter(o => o !== 'name').length > 0) {
+                                        let options = product.options.split(',').filter(o => o !== 'name');
+                                        for (let i = 0; i < options.length; i++) {
+                                            let choiceHTML = '';
+                                            let optionName = options[i].split('[')[0];
+                                            let choices = options[i].split('[')[1].split(']')[0].split('-');
+                                            for (let j = 0; j < choices.length; j++) {
+                                                choiceHTML += `
                                             <div class="form-check form-check-inline">
                                                 <label>${choices[j].split(':')[0]} (+${parseFloat(choices[j].split(':')[1].replace('€', '').trim()).toFixed(2)}€)</label>
                                             </div>`;
 
-                                        }
-                                        productOptionsHTML += `
+                                            }
+                                            productOptionsHTML += `
                                         <div class="col-md-6 mb-25">
                                             <label class="form-label">${optionName}</label>
                                             <div class="form-checkbox-box">
                                                 ${choiceHTML}
                                             </div>
                                         </div> `;
+                                        }
                                     }
 
                                     html = html.replace('{{productOptions}}', productOptionsHTML);
