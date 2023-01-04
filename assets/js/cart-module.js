@@ -426,7 +426,7 @@ let CartModule = class CartModule {
                 optionValues.forEach((item, index) => {
                     let optionValue = item.split(':')[0];
                     let optionPrice = item.split(':')[1];
-                    optionContentHTML += '<option value="' + optionValue + '" data-price="' + optionPrice + '" ' + (actualOptions[i] && actualOptions[i][optionName] == optionValue ? 'selected' : '') + '>' + optionValue + ' (+' + optionPrice + ')</option>';
+                    optionContentHTML += '<option value="' + optionValue + '" data-price="' + optionPrice + '" ' + (actualOptions[i] && actualOptions[i][optionName] == optionValue ? 'selected' : '') + '>' + optionValue + ' (+' + optionPrice + '€)</option>';
                 });
                 optionContentHTML += '</select>';
                 optionContentHTML += '</div>';
