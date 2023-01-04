@@ -160,9 +160,7 @@ let CartModule = class CartModule {
         } else {
             if (weight > 0 && weight <= 20) {
                 return 1.90;
-            } else if (weight > 20 && weight <= 50) {
-                return 2.90;
-            } else if (weight > 50 && weight <= 100) {
+            } else if (weight > 20 && weight <= 100) {
                 return 3.50;
             } else if (weight > 100 && weight <= 250) {
                 return 4.90;

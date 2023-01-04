@@ -27,8 +27,9 @@ let Product = class Product {
                 if (err) reject(err);
                 resolve({ success: true });
             });
-            this.fs.rmdirSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id, { recursive: true });
-
+            this.fs.rm(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id, { recursive: true, force: true }, (err) => {
+                if (err) reject(err);
+            });
             this.db.query(`DELETE FROM reviews WHERE product_id = ${id}`, (err, result) => {
                 if (err) reject(err);
                 resolve({ success: true });
@@ -62,8 +63,8 @@ let Product = class Product {
             // }
             Object.keys(thumbs).forEach((item, index) => {
                 let buffer = thumbs[item].data;
-
-                let name = id + '-' + index + '.' + thumbs[item].mimetype.split('/')[1];
+                let thumbNum = parseInt(item.split('-')[1]) ? 7 - parseInt(item.split('-')[1]) : 0;
+                let name = id + '-' + thumbNum + '.' + thumbs[item].mimetype.split('/')[1];
                 this.fs.writeFileSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id + '/' + name : this.HOME + '/products-thumbs/' + id + '/' + name, buffer, (err) => {
                     if (err) reject(err);
                 });

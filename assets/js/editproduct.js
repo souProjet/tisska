@@ -134,21 +134,22 @@ let productDesc = document.querySelector('#productDesc');
 let productPersonalizeOption = document.querySelectorAll('input[type="checkbox"]:not([name="package"])');
 let personalizeOptionTab = [];
 
-let options = productOptionsText.split(',');
-for (let i = 0; i < options.length; i++) {
-    let choicesTab = [];
-    let optionName = options[i].split('[')[0];
-    let choices = options[i].split('[')[1].split(']')[0].split('-');
+if (productOptionsText != '') {
+    let options = productOptionsText.split(',');
+    for (let i = 0; i < options.length; i++) {
+        let choicesTab = [];
+        let optionName = options[i].split('[')[0];
+        let choices = options[i].split('[')[1].split(']')[0].split('-');
 
-    for (let j = 0; j < choices.length; j++) {
-        let choiceName = choices[j].split(':')[0];
-        let choicePrice = choices[j].split(':')[1];
-        choicesTab.push({ name: choiceName, price: choicePrice });
+        for (let j = 0; j < choices.length; j++) {
+            let choiceName = choices[j].split(':')[0];
+            let choicePrice = choices[j].split(':')[1];
+            choicesTab.push({ name: choiceName, price: choicePrice });
+        }
+
+        personalizeOptionTab.push({ name: optionName, choices: choicesTab });
     }
-
-    personalizeOptionTab.push({ name: optionName, choices: choicesTab });
 }
-
 editProductBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
