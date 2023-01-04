@@ -38,6 +38,7 @@ let lastnameInput = document.querySelector('input[name="lastname"]');
 let addressInput = document.querySelector('input[name="address"]');
 let cityInput = document.querySelector('input[name="city"]');
 let postalCodeInput = document.querySelector('input[name="postalcode"]');
+let commentInput = document.querySelector('textarea[name="comment"]');
 
 let displayError = document.getElementById('card-errors');
 

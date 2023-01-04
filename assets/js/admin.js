@@ -171,6 +171,7 @@ fetch('/api/orders', {
                                 <td>${order.firstname} ${order.lastname}</td>
                                 <td>${order.address}, ${order.city} ${order.zip}</td>
                                 <td>${order.email}</td>
+                                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
                                 <td class="text-right">
                                     <button class="btn btn-primary" onclick="confirmOrder(${parseInt(order.id)})"><img height="20" width="20" src="/public/img/confirm.svg" alt="checked" class="order-status" ></button>
                                 </td>

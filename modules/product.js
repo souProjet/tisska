@@ -349,9 +349,9 @@ let Product = class Product {
             });
         });
     }
-    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount) {
+    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment) {
         return new Promise((resolve, reject) => {
-            this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, created_at) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}', '${new Date().toLocaleDateString()}')`, (err, result) => {
+            this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}')`, (err, result) => {
                 if (err) reject(err);
                 resolve(result.insertId);
             });

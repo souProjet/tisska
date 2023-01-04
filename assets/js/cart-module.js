@@ -660,6 +660,7 @@ let CartModule = class CartModule {
                 let addressInput = document.querySelector('input[name="address"]');
                 let cityInput = document.querySelector('input[name="city"]');
                 let postalCodeInput = document.querySelector('input[name="postalcode"]');
+                let commentInput = document.querySelector('textarea[name="comment"]');
 
                 let payBtnStripe = document.querySelector('.pay-btn-stripe');
                 payBtnStripe.addEventListener('click', function(e) {
@@ -697,6 +698,7 @@ let CartModule = class CartModule {
                                                 postalcode: postalCodeInput.value,
                                                 email: emailInput.value,
                                                 amount: self.totalPrice,
+                                                comment: commentInput.value,
                                                 cart: cart
                                             })
                                         }).then(response => response.json())

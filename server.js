@@ -1097,6 +1097,7 @@ app.post('/api/order', (req, res) => {
     let postalCode = escapeHTML(req.body.postalcode);
     let email = escapeHTML(req.body.email);
     let amount = parseFloat(req.body.amount);
+    let comment = escapeHTML(req.body.comment);
 
     if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email) {
         res.json({
@@ -1106,7 +1107,7 @@ app.post('/api/order', (req, res) => {
     }
 
     //insert pending order in database
-    product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount).then((result) => {
+    product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment).then((result) => {
         if (result) {
             res.json({
                 error: false,
