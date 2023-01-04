@@ -11,6 +11,9 @@ function escapeHTML(unsafe) {
 }
 
 let token = escapeHTML(document.querySelector('meta[name="token"]').getAttribute('content')); //récupération du token
+let productID = escapeHTML(document.querySelector('meta[name="productID"]').getAttribute('content')); //récupération de l'ID du produit
+let productOptionsText = escapeHTML(document.querySelector('meta[name="productOptions"]').getAttribute('content')); //récupération des options du produit
+
 let cartBtn = document.querySelectorAll('.cart-btn');
 cartBtn.forEach((item, index) => {
 
@@ -20,7 +23,7 @@ cartBtn.forEach((item, index) => {
 
 
 //############################################################################################################
-//                                     CODE SPÉCIFIQUE À LA PAGE ADDPRODUCT
+//                                     CODE SPÉCIFIQUE À LA PAGE EDITPRODUCT
 //############################################################################################################
 
 
@@ -41,12 +44,33 @@ dropdown.addEventListener('click', function() {
     dropdownMenu.style.transform = 'translate(-114px, 43px)';
 });
 
-
-
-
 //############################################################################################################
+//                                     ÉVÈNEMENTS LIÉS À LA SUPPRESSION DU PRODUIT
+//############################################################################################################
+let deleteBtn = document.querySelector('.delete-product-btn');
+deleteBtn.addEventListener('click', function() {
+    let warning = confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');
+    if (warning) {
+        fetch('/api/product/' + productID, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        }).then(response => {
+            if (response.error) {
+                console.log(response.error);
+                return;
+            }
+            window.location.href = '/';
+        })
+    }
+});
+
+
+// ############################################################################################################
 //                                     ÉVÈNEMENTS LIÉS À L'AJOUT DES IMAGES
-//############################################################################################################
+// ############################################################################################################
 let productThumb = document.querySelectorAll('input[type="file"]');
 
 productThumb.forEach((item, index) => {
@@ -93,7 +117,7 @@ productThumb.forEach((item, index) => {
 
 
 //############################################################################################################
-//                                 ÉVÈNEMENTS LIÉS À L'AJOUT D'UN PRODUIT
+//                                 ÉVÈNEMENTS LIÉS À LA MODIFICATION D'UN PRODUIT
 //############################################################################################################
 let productName = document.querySelector('#productName');
 // set upper case for first letter
@@ -102,7 +126,7 @@ productName.addEventListener('keyup', function() {
     productName.value = value.charAt(0).toUpperCase() + value.slice(1);
 });
 
-let addProductBtn = document.querySelector('.add-product-btn');
+let editProductBtn = document.querySelector('.edit-product-btn');
 let productWeight = document.querySelector('#productWeight');
 let productShortDesc = document.querySelector('#productShortDesc');
 let productPrice = document.querySelector('#productPrice');
@@ -110,7 +134,22 @@ let productDesc = document.querySelector('#productDesc');
 let productPersonalizeOption = document.querySelectorAll('input[type="checkbox"]:not([name="package"])');
 let personalizeOptionTab = [];
 
-addProductBtn.addEventListener('click', function(e) {
+let options = productOptionsText.split(',');
+for (let i = 0; i < options.length; i++) {
+    let choicesTab = [];
+    let optionName = options[i].split('[')[0];
+    let choices = options[i].split('[')[1].split(']')[0].split('-');
+
+    for (let j = 0; j < choices.length; j++) {
+        let choiceName = choices[j].split(':')[0];
+        let choicePrice = choices[j].split(':')[1];
+        choicesTab.push({ name: choiceName, price: choicePrice });
+    }
+
+    personalizeOptionTab.push({ name: optionName, choices: choicesTab });
+}
+
+editProductBtn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     let personalizeOption = [];
@@ -129,6 +168,7 @@ addProductBtn.addEventListener('click', function(e) {
     });
 
     let data = {
+        id: productID,
         name: productName.value,
         shortDesc: productShortDesc.value,
         price: productPrice.value,
@@ -138,7 +178,7 @@ addProductBtn.addEventListener('click', function(e) {
         package: document.querySelector('input[name="package"]').checked
     }
 
-    fetch('/api/addproduct', {
+    fetch('/api/editproduct', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -154,7 +194,7 @@ addProductBtn.addEventListener('click', function(e) {
         }
         //upload thumb
         let formData = new FormData();
-        formData.append('id', data.id);
+        formData.append('id', productID);
         productThumb.forEach((item, index) => {
             if (item.files[0]) {
                 //verify if file is image
@@ -181,16 +221,16 @@ addProductBtn.addEventListener('click', function(e) {
                 console.log(data.error);
                 return;
             }
-            window.location.href = '/product/' + data.id;
+            window.location.href = '/product/' + productID
         });
     });
 
 });
 
 
-//############################################################################################################
+// ############################################################################################################
 //                                      GESTION DE L'AJOUT D'UNE OPTION
-//############################################################################################################
+// ############################################################################################################
 let addOptionBtn = document.querySelector('.add-option-btn');
 addOptionBtn.addEventListener('click', function(e) {
     let optionName = prompt('Nom de l\'option');

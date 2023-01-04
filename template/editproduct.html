@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Tiss'Ka - Personnalisation Textile Et Objects</title>
+    <meta name="keywords" content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="Vente de produit personnalisée textile et objects.">
+    <meta name="author" content="Tiss'Ka">
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/addproduct.css" />
+
+    <!-- balise meta contenant le token unique de l'utilisateur -->
+    <meta name="token" content="{{token}}">
+    <meta name="productID" content="{{productID}}">
+    <meta name="productOptions" content="{{productOptionsText}}">
+</head>
+
+<body class="shop_page">
+    {{header}}
+
+    <section class="ec-page-content ec-vendor-uploads section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="ec-shop-rightside col-lg-12 col-md-12">
+                    <div class="ec-vendor-dashboard-card">
+                        <div class="ec-vendor-card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="ec-vendor-img-upload">
+                                        <div class="ec-vendor-main-img">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" class="ec-image-upload" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUpload"><img src="/public/img/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                </div>
+                                                <div class="avatar-preview ec-preview">
+                                                    <div class="imagePreview ec-div-preview">
+                                                        <img class="ec-image-preview" src="{{productFirstMinia}}" alt="edit" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="thumb-upload-set colo-md-12">
+                                                {{productThumbs}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="ec-vendor-upload-detail">
+                                        <form class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="productName" class="form-label">Nom du produit</label>
+                                                <input type="text" class="form-control" id="productName" value="{{productName}}">
+                                            </div>
+                                            <div class="col-md-6 price-section">
+                                                <label for="productPrice" class="form-label">Prix (en €)</label>
+                                                <input type="number" class="form-control" id="productPrice" min="0" step="0.01" value="{{productPrice}}">
+                                            </div>
+                                            {{productOptions}}
+                                            <div class="col-md-6">
+                                                <label for="productWeight" class="form-label">Masse du produit (en gramme)</label>
+                                                <input type="text" class="form-control" id="productWeight" value="{{productWeight}}">
+                                            </div>
+                                            <div class="col-md-6 mb-25" style="display: flex;align-items: center;">
+                                                <label class="form-label">Envois par colis</label>
+                                                <div class="form-checkbox-box">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="package" value="package" {{packageChecked}}>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="productShortDesc" class="form-label">Description rapide</label>
+                                                <textarea class="form-control" rows="2" id="productShortDesc">{{productDescription}}</textarea>
+                                            </div>
+
+                                            <div class="col-md-6 mb-25 personnalize-option">
+                                                <label class="form-label">Options de personnalisation</label>
+                                                <div class="form-checkbox-box">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="name" value="name" {{nameChecked}}>
+                                                        <label>Prénom</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <button type="button" class="btn btn-primary add-option-btn">
+                                                        +
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label for="productDesc" class="form-label">Détails complets</label>
+                                                <textarea class="form-control" rows="4" id="productDesc">{{productDetails}}</textarea>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary edit-product-btn">Modifier</button>
+                                                <button type="button" class="btn delete-product-btn" style="background-color: #ff0000; color:white;">Supprimer</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{footer}}
+
+
+    <div class="ec-nav-toolbar">
+        <div class="container">
+            <div class="ec-nav-panel">
+                {{adminBtnMobile}}
+                <div class="ec-nav-panel-icons">
+                    <a class="toggle-cart ec-header-btn ec-side-toggle cart-btn">
+                        <img src="/public/img/cart.svg" class="svg_img header_svg" alt="icon">
+                        <!-- <span class="ec-cart-noti ec-header-count cart-count-lable">3</span> -->
+                    </a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="/" class="ec-header-btn"><img src="/public/img/home.svg" class="svg_img header_svg" alt="icon"></a>
+                </div>
+                <div class="ec-nav-panel-icons">
+                    <a href="{{avatarLink}}" class="ec-header-btn"><img src="{{avatarURL}}" class="svg_img header_svg ec-user-avatar" alt="icon"></a>
+                </div>
+                {{mobileLogoutBtn}}
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/editproduct.js"></script>
+
+</body>
+
+</html>

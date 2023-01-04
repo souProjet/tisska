@@ -225,20 +225,153 @@ app.get('/addproduct', (req, res) => {
 
                             res.send(html);
                         } else {
-                            res.redirect('/');
+                            res.status(404).sendFile(__dirname + '/template/404.html');
                         }
 
                     });
 
                 } else {
-                    res.redirect('/');
+                    res.status(404).sendFile(__dirname + '/template/404.html');
                 }
             });
         } else {
-            res.redirect('/');
+            res.status(404).sendFile(__dirname + '/template/404.html');
         }
     });
 });
+
+app.get('/editproduct/:id', (req, res) => {
+    let id = escapeHTML(req.params.id);
+    let token = escapeHTML(req.cookies.token);
+    login.tokenIsValid(token).then((result) => {
+        if (result) {
+            //verify if user is admin
+            login.isAdmin(token).then((isAdmin) => {
+                if (isAdmin) {
+                    login.getUser(token).then((user) => {
+                        if (user) {
+                            product.getProduct(id).then((product) => {
+                                if (!product.error) {
+                                    let html = fs.readFileSync(__dirname + '/template/editproduct.html', 'utf8');
+                                    html = html.replace(/{{token}}/gm, token);
+                                    html = html.replace(/{{header}}/g, fs.readFileSync(__dirname + '/template/header.html', 'utf8'));
+                                    html = html.replace(/{{footer}}/g, fs.readFileSync(__dirname + '/template/footer.html', 'utf8'));
+                                    html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
+                                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                                    html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
+                                    <a class="ec-header-btn" onclick="window.location='/admin'">
+                                        <div class="header-icon">
+                                            <img src="/public/img/stats.svg" class="svg_img header_svg" alt="">
+                                        </div>
+                                    </a>` : '');
+                                    html = html.replace(/{{adminBtnMobile}}/gm, isAdmin ? `
+                                    <div class="ec-nav-panel-icons">
+                                        <a class="toggle-cart ec-header-btn" onclick="window.location='/admin'">
+                                            <img src="/public/img/stats.svg" class="svg_img header_svg" alt="icon">
+                                        </a>
+                                    </div>` : '');
+                                    html = html.replace(/{{avatarLink}}/gm, '/profile');
+                                    html = html.replace(/{{mobileLogoutBtn}}/gm, `
+                                    <div class="ec-nav-panel-icons">
+                                        <a class="toggle-cart ec-header-btn" onclick="window.location='/logout'">
+                                            <img src="/public/img/logout.svg" class="svg_img header_svg" alt="icon">
+                                        </a>
+                                    </div>`);
+                                    html = html.replace('{{username}}', '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
+                                    html = html.replace('{{productID}}', product.id);
+                                    html = html.replace('{{productName}}', product.name);
+                                    html = html.replace('{{productPrice}}', product.price);
+                                    html = html.replace('{{productDescription}}', product.description);
+                                    html = html.replace('{{productDetails}}', product.detail);
+                                    html = html.replace('{{productWeight}}', product.weight);
+                                    html = html.replace('{{packageChecked}}', JSON.parse(product.package) ? 'checked' : '');
+
+                                    html = html.replace('{{productFirstMinia}}', '/product/thumb/' + product.id + '-0');
+
+                                    let productThumbsHTML = '';
+                                    let thumbs = fs.readdirSync(HOME + '/products-thumbs/' + id);
+                                    for (let i = 1; i < thumbs.length; i++) {
+                                        productThumbsHTML += `
+                                        <div class="thumb-upload">
+                                            <div class="thumb-edit">
+                                                <input type='file' id="thumbUpload01" class="ec-image-upload" accept=".png, .jpg, .jpeg" />
+                                                <label for="imageUpload"><img src="/public/img/edit.svg"
+                                                        class="svg_img header_svg" alt="edit" /></label>
+                                            </div>
+                                            <div class="thumb-preview ec-preview">
+                                                <div class="image-thumb-preview">
+                                                    <img class="image-thumb-preview ec-image-preview" src="/product/thumb/${product.id}-${i}" alt="preview">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        `;
+                                    }
+                                    for (let i = thumbs.length; i < 7; i++) {
+                                        productThumbsHTML = `
+                                        <div class="thumb-upload">
+                                                    <div class="thumb-edit">
+                                                        <input type='file' id="thumbUpload01" class="ec-image-upload" accept=".png, .jpg, .jpeg" />
+                                                        <label for="imageUpload"><img src="/public/img/edit.svg"
+                                                                class="svg_img header_svg" alt="edit" /></label>
+                                                    </div>
+                                                    <div class="thumb-preview ec-preview">
+                                                        <div class="image-thumb-preview">
+                                                            <img class="image-thumb-preview ec-image-preview" src="/public/img/vender-upload-thumb-preview.jpg" alt="edit" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        ` + productThumbsHTML;
+                                    }
+
+                                    html = html.replace('{{productThumbs}}', productThumbsHTML);
+
+                                    html = html.replace('{{nameChecked}}', product.options.split(',').includes('name') ? 'checked' : '');
+
+                                    let productOptionsHTML = '';
+                                    let options = product.options.split(',').filter(o => o !== 'name');
+                                    for (let i = 0; i < options.length; i++) {
+                                        let choiceHTML = '';
+                                        let optionName = options[i].split('[')[0];
+                                        let choices = options[i].split('[')[1].split(']')[0].split('-');
+                                        for (let j = 0; j < choices.length; j++) {
+                                            choiceHTML += `
+                                            <div class="form-check form-check-inline">
+                                                <label>${choices[j].split(':')[0]} (+${parseFloat(choices[j].split(':')[1].replace('€', '').trim()).toFixed(2)}€)</label>
+                                            </div>`;
+
+                                        }
+                                        productOptionsHTML += `
+                                        <div class="col-md-6 mb-25">
+                                            <label class="form-label">${optionName}</label>
+                                            <div class="form-checkbox-box">
+                                                ${choiceHTML}
+                                            </div>
+                                        </div> `;
+                                    }
+
+                                    html = html.replace('{{productOptions}}', productOptionsHTML);
+                                    html = html.replace('{{productOptionsText}}', product.options.split(',').filter(o => o !== 'name').join(', '));
+
+                                    res.send(html);
+                                } else {
+                                    res.status(404).sendFile(__dirname + '/template/404.html');
+                                }
+                            });
+                        } else {
+                            res.status(404).sendFile(__dirname + '/template/404.html');
+                        }
+                    });
+                } else {
+                    res.status(404).sendFile(__dirname + '/template/404.html');
+                }
+            });
+        } else {
+            res.status(404).sendFile(__dirname + '/template/404.html');
+        }
+    });
+});
+
+
 
 app.get('/product/:id', (req, res) => {
     let id = escapeHTML(req.params.id);
@@ -278,6 +411,7 @@ app.get('/product/:id', (req, res) => {
                                     <img src="/public/img/logout.svg" class="svg_img header_svg" alt="icon">
                                 </a>
                             </div>`);
+                            html = html.replace(/{{editBtn}}/gm, isAdmin ? `<button onclick="window.location='/editproduct/${product.id}'" class="btn btn-secondary">Modifier</button>` : '');
 
                         } else {
                             html = html.replace(/{{token}}/gm, '');
@@ -288,6 +422,7 @@ app.get('/product/:id', (req, res) => {
                             html = html.replace(/{{avatarLink}}/gm, '/login');
                             html = html.replace(/{{adminBtnMobile}}/gm, '');
                             html = html.replace(/{{mobileLogoutBtn}}/gm, '');
+                            html = html.replace(/{{editBtn}}/gm, '');
                         }
                         html = html.replace(/{{productId}}/gm, product.id);
 
@@ -345,13 +480,24 @@ app.get('/checkout', (req, res) => {
                         html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                         html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
                         html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+
+                        if (isAdmin) {
+                            html = html.replace(/{{adminBtn}}/gm, `
+                            <a class="ec-nav-link" href="/admin">
+                                <div class="ec-nav-icon">
+                                    <img src="/public/img/stats.svg" class="svg_img header_svg" alt="">
+                                </div>
+                            </a>`);
+                        } else {
+                            html = html.replace(/{{adminBtn}}/gm, '');
+                        }
                     }
                 } else {
                     html = html.replace(/{{token}}/gm, '');
                     html = html.replace(/{{username}}/gm, '');
                     html = html.replace(/{{avatarURL}}/gm, '/public/img/defaultAvatar.svg');
                     html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/login">Se connecter</a></li><li><a class="dropdown-item" href="/register">S'inscrire</a></li>`);
-
+                    html = html.replace(/{{adminBtn}}/gm, '');
                 }
                 res.send(html);
             });
@@ -657,6 +803,62 @@ app.post('/api/addproduct', (req, res) => {
     });
 });
 
+app.post('/api/editproduct', (req, res) => {
+    let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
+    login.tokenIsValid(token).then((result) => {
+        if (result) {
+            //verify if user is admin
+            login.isAdmin(token).then((result) => {
+                if (result) {
+                    let data = req.body;
+                    //escape all fields except personalizeOption
+
+                    //verify if all fields are filled
+                    if (!data.name || !data.weight || !data.shortDesc || !data.price || !data.desc) {
+                        res.json({
+                            error: 'Veuillez remplir tous les champs.'
+                        });
+                        return;
+                    }
+                    //verify if price is valid
+                    if (!data.price.match(/^[0-9]+(\.[0-9]{1,2})?$/)) {
+                        res.json({
+                            error: 'Veuillez entrer un prix valide.'
+                        });
+                        return;
+                    }
+                    //add product
+                    //escape all fields except package
+                    for (let key in data) {
+                        if (key != 'package') {
+                            data[key] = escapeHTML(data[key]);
+                        }
+                    }
+
+                    product.editProduct(data).then((result) => {
+                        if (result) {
+                            res.json({
+                                error: false,
+                                success: 'Produit modifié avec succès.'
+                            });
+                        }
+                    });
+                } else {
+                    res.json({
+                        error: 'Vous n\'êtes pas administrateur.'
+                    });
+                }
+            });
+        } else {
+            res.json({
+                error: 'Token invalide.'
+            });
+        }
+    });
+});
+
+
+
 
 app.post('/api/addproductthumb', (req, res) => {
     let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
@@ -668,8 +870,16 @@ app.post('/api/addproductthumb', (req, res) => {
                     // formData contains the file and the product id
                     let formData = req.files;
                     let id = escapeHTML(req.body.id);
+                    if (!formData) {
+                        res.json({
+                            error: false,
+                            success: 'Aucune image sélectionnée.',
+                            id: id
+                        });
+                        return;
+                    }
                     //verify if all fields are filled
-                    if (!formData || !id) {
+                    if (!id) {
                         res.json({
                             error: 'Veuillez remplir tous les champs.'
                         });
@@ -775,6 +985,43 @@ app.get('/api/product/:productId', (req, res) => {
         }
     });
 });
+
+app.delete('/api/product/:productId', (req, res) => {
+    let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
+    let productId = parseInt(escapeHTML(req.params.productId));
+    if (!productId) {
+        res.json({
+            error: 'Erreur.'
+        });
+        return;
+    }
+    login.tokenIsValid(token).then((result) => {
+        if (result) {
+            //verify if user is admin
+            login.isAdmin(token).then((result) => {
+                if (result) {
+                    product.deleteProduct(productId).then((result) => {
+                        if (result) {
+                            res.json({
+                                error: false,
+                                success: 'Produit supprimé avec succès.'
+                            });
+                        }
+                    });
+                } else {
+                    res.json({
+                        error: 'Vous n\'êtes pas administrateur.'
+                    });
+                }
+            });
+        } else {
+            res.json({
+                error: 'Token invalide.'
+            });
+        }
+    });
+});
+
 
 app.post('/api/cart/update', (req, res) => {
     let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));

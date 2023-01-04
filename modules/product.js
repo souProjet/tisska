@@ -21,6 +21,33 @@ let Product = class Product {
 
         });
     }
+    deleteProduct(id) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`DELETE FROM products WHERE id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve({ success: true });
+            });
+            this.fs.rmdirSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id, { recursive: true });
+
+            this.db.query(`DELETE FROM reviews WHERE product_id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve({ success: true });
+            });
+        });
+    }
+    editProduct(data) {
+        return new Promise((resolve, reject) => {
+            //created is a date in format 13/12/2022
+            //weight is a float
+            data.weight = parseFloat(data.weight);
+            //package is a boolean
+            data.package = data.package ? 1 : 0;
+            this.db.query(`UPDATE products SET name = '${data.name}', description = '${data.shortDesc}', price = '${data.price}', detail = '${data.desc}', options = '${data.personalizeOption}', weight = '${data.weight}', package = '${data.package}' WHERE id = ${data.id}`, (err, result) => {
+                if (err) reject(err);
+                resolve({ success: true });
+            });
+        });
+    }
     addProductThumb(thumbs, id) {
         return new Promise((resolve, reject) => {
 
