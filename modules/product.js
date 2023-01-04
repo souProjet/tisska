@@ -360,7 +360,7 @@ let Product = class Product {
 
     getOrders() {
         return new Promise((resolve, reject) => {
-            this.db.query(`SELECT * FROM orders`, (err, result) => {
+            this.db.query(`SELECT * FROM orders WHERE completed=0 ORDER BY id`, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });

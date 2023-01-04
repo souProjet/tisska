@@ -609,13 +609,13 @@ app.get('/admin', (req, res) => {
                             let date = new Date();
                             let month = date.getMonth() + 1;
                             let year = date.getFullYear();
-                            db.query('SELECT COUNT(*) AS count FROM orders WHERE created_at LIKE "%/' + month + '/' + year + '"', (err, result) => {
+                            db.query('SELECT COUNT(*) AS count FROM orders', (err, result) => {
                                 if (err) throw err;
                                 result[0].count = result[0].count || 0;
                                 html = html.replace(/{{nbOrders}}/gm, result[0].count);
 
                                 //revenue this month (amount is DOUBLE)
-                                db.query('SELECT SUM(amount) AS sum FROM orders WHERE created_at LIKE "%/' + month + '/' + year + '"', (err, result) => {
+                                db.query('SELECT SUM(amount) AS sum FROM orders', (err, result) => {
                                     if (err) throw err;
                                     result[0].sum = result[0].sum || 0;
                                     html = html.replace(/{{revenue}}/gm, result[0].sum.toFixed(2));
