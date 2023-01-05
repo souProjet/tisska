@@ -213,7 +213,7 @@ let CartModule = class CartModule {
                                         //product.options exemple : 'name,couleur[vert:0.00€-rouge:1.00€-bleu:1.00€-jaune:1.00€-bleu foncé:1.00€]'
                                         //example : si option = {couleur: 'rouge'} alors optionPrice = 1.00€
                                         if (key != 'name') {
-                                            optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('-').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
+                                            optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('|').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
                                         }
                                     }
                                 });
@@ -414,7 +414,7 @@ let CartModule = class CartModule {
             let optionsArray = options.split(',').filter(item => !item.includes('name'));
             optionsArray.forEach((item, index) => {
                 let optionName = item.split('[')[0];
-                let optionValues = item.split('[')[1].split(']')[0].split('-');
+                let optionValues = item.split('[')[1].split(']')[0].split('|');
 
                 //crée un container pour chaque option
                 optionContentHTML += '<div class="ec-modal-option-container">';
@@ -560,7 +560,7 @@ let CartModule = class CartModule {
                                 //product.options exemple : 'name,couleur[vert:0.00€-rouge:1.00€-bleu:1.00€-jaune:1.00€-bleu foncé:1.00€]'
                                 //example : si option = {couleur: 'rouge'} alors optionPrice = 1.00€
                                 if (key != 'name') {
-                                    optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('-').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
+                                    optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('|').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
                                 }
                             }
                         });

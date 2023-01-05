@@ -122,7 +122,7 @@ addProductBtn.addEventListener('click', function(e) {
         //store like : {optionName}[optionChoice1:optionPrice1-optionChoice2:optionPrice2],...
         let optionChoices = ''
         item.choices.forEach((choice, index) => {
-            optionChoices += `${choice.name}:${choice.price}-`;
+            optionChoices += `${choice.name}:${choice.price}|`;
         });
         optionChoices = optionChoices.slice(0, -1);
         personalizeOption.push(`${item.name}[${optionChoices}]`);

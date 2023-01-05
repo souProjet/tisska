@@ -139,7 +139,7 @@ if (productOptionsText != '') {
     for (let i = 0; i < options.length; i++) {
         let choicesTab = [];
         let optionName = options[i].split('[')[0];
-        let choices = options[i].split('[')[1].split(']')[0].split('-');
+        let choices = options[i].split('[')[1].split(']')[0].split('|');
 
         for (let j = 0; j < choices.length; j++) {
             let choiceName = choices[j].split(':')[0];
@@ -162,7 +162,7 @@ editProductBtn.addEventListener('click', function(e) {
         //store like : {optionName}[optionChoice1:optionPrice1-optionChoice2:optionPrice2],...
         let optionChoices = ''
         item.choices.forEach((choice, index) => {
-            optionChoices += `${choice.name}:${choice.price}-`;
+            optionChoices += `${choice.name}:${choice.price}|`;
         });
         optionChoices = optionChoices.slice(0, -1);
         personalizeOption.push(`${item.name}[${optionChoices}]`);
