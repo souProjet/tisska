@@ -77,7 +77,7 @@ let Product = class Product {
     getProducts() {
         return new Promise((resolve, reject) => {
 
-            this.db.query(`SELECT * FROM products`, (err, result) => {
+            this.db.query(`SELECT * FROM products WHERE pinned = 1 UNION SELECT * FROM products WHERE pinned = 0`, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });

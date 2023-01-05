@@ -184,6 +184,32 @@ commentSubmit.addEventListener('click', function(e) {
     }
 });
 
+function pinProduct(id, state) {
+    fetch('/api/product/pin/' + id + '/' + state, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    }).then((response) => {
+        return response.json();
+    }).then((data) => {
+        if (data.error) {
+            console.log(data.error);
+            return;
+        }
+        if (state == 1) {
+            document.querySelector('.ec-pin-product').innerHTML = 'Désépingler';
+            document.querySelector('.ec-pin-product').setAttribute('onclick', 'pinProduct(' + id + ', 0)');
+        } else {
+            document.querySelector('.ec-pin-product').innerHTML = 'Épingler';
+            document.querySelector('.ec-pin-product').setAttribute('onclick', 'pinProduct(' + id + ', 1)');
+        }
+    });
+}
+
+
+
 
 
 

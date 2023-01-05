@@ -416,8 +416,8 @@ app.get('/product/:id', (req, res) => {
                                     <img src="/public/img/logout.svg" class="svg_img header_svg" alt="icon">
                                 </a>
                             </div>`);
-                            html = html.replace(/{{editBtn}}/gm, isAdmin ? `<button onclick="window.location='/editproduct/${product.id}'" class="btn btn-secondary">Modifier</button>` : '');
-
+                            html = html.replace(/{{editBtn}}/gm, isAdmin ? `<button onclick="window.location='/editproduct/${product.id}'" class="btn btn-secondary ">Modifier</button>` : '');
+                            html = html.replace(/{{pinBtn}}/gm, isAdmin ? (product.pinned ? `<button style="margin-left:15px;" onclick="pinProduct(${product.id}, false)" class="btn btn-secondary ec-pin-product">Désépingler</button>` : `<button style="margin-left:15px;" onclick="pinProduct(${product.id}, true)" class="btn btn-secondary ec-pin-product">Épingler</button>`) : '');
                         } else {
                             html = html.replace(/{{token}}/gm, '');
                             html = html.replace(/{{username}}/gm, '');
@@ -428,6 +428,7 @@ app.get('/product/:id', (req, res) => {
                             html = html.replace(/{{adminBtnMobile}}/gm, '');
                             html = html.replace(/{{mobileLogoutBtn}}/gm, '');
                             html = html.replace(/{{editBtn}}/gm, '');
+                            html = html.replace(/{{pinBtn}}/gm, '');
                         }
                         html = html.replace(/{{productId}}/gm, product.id);
 
@@ -1012,6 +1013,47 @@ app.delete('/api/product/:productId', (req, res) => {
                                 success: 'Produit supprimé avec succès.'
                             });
                         }
+                    });
+                } else {
+                    res.json({
+                        error: 'Vous n\'êtes pas administrateur.'
+                    });
+                }
+            });
+        } else {
+            res.json({
+                error: 'Token invalide.'
+            });
+        }
+    });
+});
+
+app.get('/api/product/pin/:productId/:state', (req, res) => {
+    let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
+    let productId = parseInt(escapeHTML(req.params.productId));
+    let state = req.params.state === 'true' ? 1 : 0;
+    if (!productId) {
+        res.json({
+            error: 'Erreur.'
+        });
+        return;
+    }
+    login.tokenIsValid(token).then((result) => {
+        if (result) {
+            //verify if user is admin
+            login.isAdmin(token).then((result) => {
+                if (result) {
+                    db.query('UPDATE products SET pinned = ? WHERE id = ?', [state, productId], (err, result) => {
+                        if (err) {
+                            res.json({
+                                error: 'Erreur.'
+                            });
+                            return;
+                        }
+                        res.json({
+                            error: false,
+                            success: 'Produit épinglé avec succès.'
+                        });
                     });
                 } else {
                     res.json({
