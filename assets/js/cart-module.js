@@ -398,7 +398,7 @@ let CartModule = class CartModule {
         let selectInput = '';
         if (quantity > 1) {
             //créer un label et un select pour choisir la quantité
-            selectInput = '<label>Examplaire n°</label><br>';
+            selectInput = '<label>Exemplaire n°</label><br>';
             selectInput += '<select class="ec-modal-select" name="quantity">';
             for (let i = 1; i <= quantity; i++) {
                 selectInput += `<option value="${i}">${i}</option>`;
