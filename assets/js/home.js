@@ -10,6 +10,10 @@ function escapeHTML(unsafe) {
         .replace(/'/g, "'") : '';
 }
 
+function formatPrice(price) {
+    return price.toFixed(2).replace('.', ',') + ' €';
+}
+
 let token = escapeHTML(document.querySelector('meta[name="token"]').getAttribute('content')); //récupération du token
 let productID = undefined;
 let cartModule = new CartModule(token); //instanciation de la classe CartModule qui permet de gérer le panier
@@ -69,4 +73,54 @@ closeBtn.addEventListener('click', function(e) {
     e.preventDefault();
     sideCartOverlay.style.display = 'none';
     sideCart.classList.remove('ec-open');
+});
+
+//gestion du changement de thème
+let themeSelect = document.querySelector('.theme-select');
+let productsContainer = document.querySelector('.ec-products-container');
+
+themeSelect.addEventListener('change', function(e) {
+    let theme = escapeHTML(e.target.value);
+    fetch('/api/products/theme/' + (theme == '0' ? '' : theme), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(response => response.json())
+        .then(data => {
+            productsContainer.querySelectorAll('.ec-product-content:not(.add-product-btn)').forEach((item, index) => {
+                item.remove();
+            });
+            let products = data.products;
+            let productsHTML = '';
+            products.forEach((item, index) => {
+                let timeSinceCreation = Math.floor((new Date() - new Date(item.created)) / (1000 * 60 * 60 * 24));
+                //if timeSinceCreation < 7 days, add new flag
+                let newFlag = timeSinceCreation < 7 ? `<span class="flags"><span class="new">New</span></span>` : '';
+                productsHTML += `<div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 ec-product-content fadeIn" data-animation="fadeIn" data-animated="true">
+                <div class="ec-product-inner">
+                    <div class="ec-pro-image-outer">
+                        <div class="ec-pro-image" onclick="window.location='/product/${item.id}'">
+                            <a href="product-left-sidebar.html" class="image">
+                                <img style="border-radius:20px;" class="main-image" src="/product/thumb/${item.id}-0" alt="Image du produit">
+                                <img style="border-radius:20px;" class="hover-image" src="/product/thumb/${item.id}-0" alt="Image du produit">
+                            </a>
+                            ${newFlag}
+                            <div class="ec-pro-loader"></div>
+                        </div>
+                    </div>
+                    <div class="ec-pro-content">
+                        <h5 class="ec-pro-title"><a href="/product/${item.id}">${item.name}</a></h5>
+
+                        <span class="ec-price">
+                            <!--<span class="old-price">0€</span>-->
+                            <span class="new-price">${formatPrice(item.price)}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>`;
+            });
+            productsContainer.innerHTML += productsHTML;
+        });
+
 });

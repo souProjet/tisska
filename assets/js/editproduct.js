@@ -131,8 +131,53 @@ let productWeight = document.querySelector('#productWeight');
 let productShortDesc = document.querySelector('#productShortDesc');
 let productPrice = document.querySelector('#productPrice');
 let productDesc = document.querySelector('#productDesc');
+let productTheme = document.querySelector('#productTheme');
+
 let productPersonalizeOption = document.querySelectorAll('input[type="checkbox"]:not([name="package"])');
 let personalizeOptionTab = [];
+
+
+//récupérer tout les thèmes déjà existants
+fetch('/api/getthemes', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        let themeList = data.themes
+        productTheme.addEventListener('keyup', function() {
+            let value = productTheme.value;
+
+            productTheme.value = value.charAt(0).toUpperCase() + value.slice(1);
+            //vérifier si le texte entré correspond à une partie d'un thème existant et si oui, le mettre en valeur
+            productTheme.parentNode.querySelectorAll('.theme-list').forEach((item, index) => {
+                item.remove();
+            });
+            let nbTheme = 0;
+            themeList.forEach((item, index) => {
+                if (item.toLowerCase().indexOf(value.toLowerCase()) != -1) {
+                    productTheme.parentNode.insertAdjacentHTML('beforeend', `<div class="theme-list" onclick="selectTheme('${item}')" style="background-color: #f5f5f5; border-radius: 5px; padding: 5px; cursor: pointer; position:absolute; width: ${productTheme.offsetWidth}px; z-index: 1; margin-top:${-30+(30*nbTheme)}px;">${item}</div>`);
+                    productTheme.focus();
+                    nbTheme++;
+
+                } else {
+                    productTheme.parentNode.querySelectorAll('.theme-list').forEach((item, index) => {
+                        item.remove();
+                    });
+                }
+            });
+        });
+    })
+    .catch(error => console.log(error));
+
+function selectTheme(theme) {
+    productTheme.value = theme;
+    productTheme.parentNode.querySelectorAll('.theme-list').forEach((item, index) => {
+        item.remove();
+    });
+}
 
 if (productOptionsText != '') {
     let options = productOptionsText.split(',');
@@ -176,7 +221,8 @@ editProductBtn.addEventListener('click', function(e) {
         desc: productDesc.value,
         personalizeOption: personalizeOption.join(','),
         weight: productWeight.value,
-        package: document.querySelector('input[name="package"]').checked
+        package: document.querySelector('input[name="package"]').checked,
+        theme: productTheme.value
     }
 
     fetch('/api/editproduct', {

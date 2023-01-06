@@ -74,14 +74,11 @@
                                                 <label for="productWeight" class="form-label">Masse du produit (en gramme)</label>
                                                 <input type="text" class="form-control" id="productWeight" value="{{productWeight}}">
                                             </div>
-                                            <div class="col-md-6 mb-25" style="display: flex;align-items: center;">
-                                                <label class="form-label">Envois par colis</label>
-                                                <div class="form-checkbox-box">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="checkbox" name="package" value="package" {{packageChecked}}>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label for="productTheme" class="form-label">Thème du produit</label>
+                                                <input type="text" class="form-control" id="productTheme" value="{{productTheme}}" autocomplete="off">
                                             </div>
+
                                             <div class="col-md-12">
                                                 <label for="productShortDesc" class="form-label">Description rapide</label>
                                                 <textarea class="form-control" rows="2" id="productShortDesc">{{productDescription}}</textarea>
@@ -98,6 +95,14 @@
                                                         <button type="button" class="btn btn-primary add-option-btn">
                                                         +
                                                         </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-25" style="display: flex;align-items: center;">
+                                                <label class="form-label">Envois par colis</label>
+                                                <div class="form-checkbox-box">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" name="package" value="package" {{packageChecked}}>
                                                     </div>
                                                 </div>
                                             </div>

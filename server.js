@@ -75,6 +75,26 @@ app.get('/', (req, res) => {
                 html = html.replace(/{{header}}/g, fs.readFileSync(__dirname + '/template/header.html', 'utf8'));
                 html = html.replace(/{{footer}}/g, fs.readFileSync(__dirname + '/template/footer.html', 'utf8'));
 
+                db.query('SELECT theme FROM products', (err, result) => {
+                    if (err) {
+                        res.json({
+                            error: 'Erreur.'
+                        });
+                        return;
+                    }
+                    let themesHTML = '';
+                    let themes = [];
+                    result.forEach((element) => {
+                        if (themes.indexOf(element.theme) === -1) {
+                            if (element.theme !== '' && element.theme !== null) {
+                                themes.push(element.theme);
+                                themesHTML += `<option value="${element.theme}">${element.theme}</option>`;
+                            }
+                        }
+                    });
+                    html = html.replace(/{{themes}}/gm, themesHTML);
+                });
+
 
                 if (result && user) {
                     //get user info
@@ -118,7 +138,7 @@ app.get('/', (req, res) => {
                     product.formatProductsHTML(products).then((productsHTML) => {
                         if (isAdmin) {
                             productsHTML = `
-                            <div onclick="window.location='/addproduct'" style="cursor:pointer;" class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 ec-product-content fadeIn" data-animation="fadeIn" data-animated="true">
+                            <div onclick="window.location='/addproduct'" style="cursor:pointer;" class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 ec-product-content add-product-btn fadeIn" data-animation="fadeIn" data-animated="true">
                                 <div class="ec-product-inner">
                                     <div class="ec-pro-image-outer">
                                         <div class="ec-pro-image">
@@ -285,6 +305,7 @@ app.get('/editproduct/:id', (req, res) => {
                                     html = html.replace('{{productDetails}}', product.detail);
                                     html = html.replace('{{productWeight}}', product.weight);
                                     html = html.replace('{{packageChecked}}', JSON.parse(product.package) ? 'checked' : '');
+                                    html = html.replace('{{productTheme}}', product.theme ? product.theme : '');
 
                                     html = html.replace('{{productFirstMinia}}', '/product/thumb/' + product.id + '-0');
 
@@ -326,6 +347,8 @@ app.get('/editproduct/:id', (req, res) => {
                                     html = html.replace('{{productThumbs}}', productThumbsHTML);
 
                                     html = html.replace('{{nameChecked}}', product.options.split(',').includes('name') ? 'checked' : '');
+
+
 
                                     let productOptionsHTML = '';
                                     if (product.options !== '') {
@@ -992,6 +1015,30 @@ app.get('/api/product/:productId', (req, res) => {
     });
 });
 
+app.get('/api/products/theme/:theme', (req, res) => {
+    if (!req.params.theme || req.params.theme === "null") {
+        product.getProducts().then((result) => {
+            if (result) {
+                res.json({
+                    error: false,
+                    products: result
+                });
+            }
+        });
+    } else {
+        let theme = escapeHTML(req.params.theme);
+        product.getProductsByTheme(theme).then((result) => {
+            if (result) {
+                res.json({
+                    error: false,
+                    products: result
+                });
+            }
+        });
+    }
+});
+
+
 app.delete('/api/product/:productId', (req, res) => {
     let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
     let productId = parseInt(escapeHTML(req.params.productId));
@@ -1068,6 +1115,30 @@ app.get('/api/product/pin/:productId/:state', (req, res) => {
         }
     });
 });
+
+app.get('/api/getthemes', (req, res) => {
+    db.query('SELECT theme FROM products', (err, result) => {
+        if (err) {
+            res.json({
+                error: 'Erreur.'
+            });
+            return;
+        }
+        let themes = [];
+        result.forEach((element) => {
+            if (themes.indexOf(element.theme) === -1) {
+                if (element.theme !== '' && element.theme !== null) {
+                    themes.push(element.theme);
+                }
+            }
+        });
+        res.json({
+            error: false,
+            themes: themes
+        });
+    });
+});
+
 
 
 app.post('/api/cart/update', (req, res) => {

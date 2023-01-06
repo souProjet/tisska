@@ -13,7 +13,7 @@ let Product = class Product {
             data.weight = parseFloat(data.weight);
             //package is a boolean
             data.package = data.package ? 1 : 0;
-            this.db.query(`INSERT INTO products (name, description, price, detail, options, created, weight, package) VALUES ('${data.name}', '${data.shortDesc}', '${data.price}', '${data.desc}', '${data.personalizeOption}','${new Date().toLocaleDateString()}','${data.weight}','${data.package}')`, (err, result) => {
+            this.db.query(`INSERT INTO products (name, description, price, detail, options, created, weight, package, theme) VALUES ('${data.name}', '${data.shortDesc}', '${data.price}', '${data.desc}', '${data.personalizeOption}','${new Date().toLocaleDateString()}','${data.weight}','${data.package}', '${data.theme}')`, (err, result) => {
                 if (err) reject(err);
                 //return id of product
                 resolve(result.insertId);
@@ -43,7 +43,7 @@ let Product = class Product {
             data.weight = parseFloat(data.weight);
             //package is a boolean
             data.package = data.package ? 1 : 0;
-            this.db.query(`UPDATE products SET name = '${data.name}', description = '${data.shortDesc}', price = '${data.price}', detail = '${data.desc}', options = '${data.personalizeOption}', weight = '${data.weight}', package = '${data.package}' WHERE id = ${data.id}`, (err, result) => {
+            this.db.query(`UPDATE products SET name = '${data.name}', description = '${data.shortDesc}', price = '${data.price}', detail = '${data.desc}', options = '${data.personalizeOption}', weight = '${data.weight}', package = '${data.package}', theme = '${data.theme}' WHERE id = ${data.id}`, (err, result) => {
                 if (err) reject(err);
                 resolve({ success: true });
             });
@@ -76,13 +76,21 @@ let Product = class Product {
     }
     getProducts() {
         return new Promise((resolve, reject) => {
-
             this.db.query(`SELECT * FROM products WHERE pinned = 1 UNION SELECT * FROM products WHERE pinned = 0`, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
         });
     }
+    getProductsByTheme(theme) {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM products WHERE theme = '${theme}' AND pinned = 1 UNION SELECT * FROM products WHERE theme = '${theme}' AND pinned = 0`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
     formatPrice(price) {
         //price is a float ex: 34.5
         //return a string with 2 decimals ex: 34.50 €
