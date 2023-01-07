@@ -362,13 +362,13 @@ app.get('/editproduct/:id', (req, res) => {
                                                 for (let j = 0; j < choices.length; j++) {
                                                     choiceHTML += `
                                             <div class="form-check form-check-inline">
-                                                <label>${choices[j].split(':')[0]} (+${parseFloat(choices[j].split(':')[1].replace('€', '').trim()).toFixed(2)}€)</label>
+                                                <label>${choices[j].split(':')[0]} (+${parseFloat(choices[j].split(':')[1]).toFixed(2)}€)</label>
                                             </div>`;
 
                                                 }
                                                 productOptionsHTML += `
                                         <div class="col-md-6 mb-25">
-                                            <label class="form-label">${optionName}</label>
+                                            <label class="form-label">${optionName} &nbsp; <a onclick="deleteOption(this, '${optionName}')" class="delete-option" style="cursor: pointer; color: red;">&times;</a></label>
                                             <div class="form-checkbox-box">
                                                 ${choiceHTML}
                                             </div>

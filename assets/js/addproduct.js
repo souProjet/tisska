@@ -269,7 +269,7 @@ addOptionBtn.addEventListener('click', function(e) {
     });
     uploadFormContainer.querySelector('.price-section').insertAdjacentHTML('afterend', `
     <div class="col-md-6 mb-25">
-        <label class="form-label">${optionName}</label>
+        <label class="form-label">${optionName} &nbsp; <a onclick="deleteOption(this, '${optionName}')" class="delete-option" style="cursor: pointer; color: red;">&times;</a></label>
         <div class="form-checkbox-box">
             ${choiceHTML}
         </div>
@@ -279,3 +279,15 @@ addOptionBtn.addEventListener('click', function(e) {
         choices: choices
     });
 });
+
+// ############################################################################################################
+//                                      GESTION DE LA SUPPRESSION D'UNE OPTION
+// ############################################################################################################
+
+function deleteOption(element, optionName) {
+    let option = personalizeOptionTab.find((item, index) => {
+        if (item.name == optionName) return item;
+    });
+    personalizeOptionTab.splice(personalizeOptionTab.indexOf(option), 1);
+    element.parentElement.parentElement.remove();
+}
