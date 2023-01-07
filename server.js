@@ -1195,7 +1195,7 @@ app.post('/api/coupan', (req, res) => {
 
 app.post('/api/paymentIntent', async(req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: parseFloat(req.body.amount) * 100,
+        amount: parseInt(parseFloat(req.body.amount) * 100),
         currency: 'eur',
         description: escapeHTML(req.body.description),
         statement_descriptor: escapeHTML(req.body.description).substring(0, 22),
