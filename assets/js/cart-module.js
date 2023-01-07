@@ -12,6 +12,7 @@ let CartModule = class CartModule {
             },{},{}]
         }]*/
         this.cart = [];
+        this.noOptions = [];
         this.summary = {
             subtotal: 0,
             total: 0,
@@ -202,25 +203,28 @@ let CartModule = class CartModule {
                             let optionsBtn = '';
                             //si item.options est un tableau vide
                             let optionPrice = 0;
-
-                            if (item.options.length == 0) {
-                                optionsBtn = `<button class="btn" style="margin-left:-26px;" onclick="cartModule.showOptionModal(${item.productID}, '${product.options}')">Ajouter des options</button>`;
-                            } else {
-                                let options = item.options;
-                                options.forEach(option => {
-                                    //pour chaque clé de l'objet option, on ajout de le prix de l'option associé dans product.options
-                                    for (const key in option) {
-                                        //product.options exemple : 'name,couleur[vert:0.00€-rouge:1.00€-bleu:1.00€-jaune:1.00€-bleu foncé:1.00€]'
-                                        //example : si option = {couleur: 'rouge'} alors optionPrice = 1.00€
-                                        if (key != 'name') {
-                                            optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('|').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
+                            if (data.product.options != null && data.product.options != '') {
+                                if (item.options.length == 0) {
+                                    optionsBtn = `<button class="btn" style="margin-left:-26px;" onclick="cartModule.showOptionModal(${item.productID}, '${product.options}')">Ajouter des options</button>`;
+                                } else {
+                                    let options = item.options;
+                                    options.forEach(option => {
+                                        //pour chaque clé de l'objet option, on ajout de le prix de l'option associé dans product.options
+                                        for (const key in option) {
+                                            //product.options exemple : 'name,couleur[vert:0.00€-rouge:1.00€-bleu:1.00€-jaune:1.00€-bleu foncé:1.00€]'
+                                            //example : si option = {couleur: 'rouge'} alors optionPrice = 1.00€
+                                            if (key != 'name') {
+                                                optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('|').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
+                                            }
                                         }
-                                    }
-                                });
-                                cartSubTotal += optionPrice;
+                                    });
+                                    cartSubTotal += optionPrice;
 
-                                optionsBtn = `<button class="btn" style="margin-left:-26px;" onclick="cartModule.showOptionModal(${item.productID}, '${product.options}')">Modifier les options</button>`;
+                                    optionsBtn = `<button class="btn" style="margin-left:-26px;" onclick="cartModule.showOptionModal(${item.productID}, '${product.options}')">Modifier les options</button>`;
 
+                                }
+                            } else {
+                                this.noOptions.push(item.productID)
                             }
                             cartTotalWeight += parseInt(product.weight) * item.quantity;
                             if (JSON.parse(product.package)) {
@@ -411,7 +415,7 @@ let CartModule = class CartModule {
             if (inputName) {
                 optionContentHTML += '<input type="text" class="ec-modal-option-name-input" placeholder="Prénom" value="' + (actualOptions[i] && actualOptions[i].name ? actualOptions[i].name : '') + '" style="width:100%;margin-bottom:10px; padding:10px; border:1px solid #ccc; border-radius:5px;">';
             }
-            let optionsArray = options.split(',').filter(item => !item.includes('name'));
+            let optionsArray = options.split(',').filter(item => !item.includes('name')).filter(item => item != '');
             optionsArray.forEach((item, index) => {
                 let optionName = item.split('[')[0];
                 let optionValues = item.split('[')[1].split(']')[0].split('|');
@@ -519,14 +523,16 @@ let CartModule = class CartModule {
         //vérifie si les options sont complètes
         let optionsComplete = true;
         this.cart.forEach(item => {
-            if (item.options.length != item.quantity) {
-                optionsComplete = false;
-            }
-            item.options.forEach(option => {
-                if (option.name == '') {
+            if (!this.noOptions.includes(item.productID)) {
+                if (item.options.length != item.quantity) {
                     optionsComplete = false;
                 }
-            });
+                item.options.forEach(option => {
+                    if (option.name == '') {
+                        optionsComplete = false;
+                    }
+                });
+            }
         });
 
         if (!optionsComplete) {
