@@ -1644,7 +1644,19 @@ input::selection {
     z-index: 1;
 }
 
-.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input {
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload .thumb-remove {
+    position: absolute;
+    bottom: -20px;
+    left: -5px;
+    z-index: 1;
+}
+
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload .thumb-remove img {
+    cursor: pointer;
+}
+
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input,
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-remove input {
     opacity: 0;
     width: 30px;
     height: 30px;
@@ -1654,7 +1666,8 @@ input::selection {
     z-index: 1;
 }
 
-.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label {
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label,
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-remove input+label {
     width: 30px;
     height: 30px;
     padding: 4px;
@@ -1680,11 +1693,13 @@ input::selection {
     transition: all 0.2s ease-in-out;
 }
 
-.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label .svg_img {
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label .svg_img,
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-remove input+label .svg_img {
     opacity: 0.6;
 }
 
-.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label:hover {
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-upload input+label:hover,
+.ec-vendor-uploads .ec-vendor-card-body .ec-vendor-img-upload .ec-vendor-main-img .thumb-upload-set .thumb-remove input+label:hover {
     -webkit-box-shadow: none;
     box-shadow: none;
 }

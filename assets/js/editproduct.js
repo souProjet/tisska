@@ -135,6 +135,7 @@ let productTheme = document.querySelector('#productTheme');
 
 let productPersonalizeOption = document.querySelectorAll('input[type="checkbox"]:not([name="package"])');
 let personalizeOptionTab = [];
+let removedThumbList = [];
 
 
 //récupérer tout les thèmes déjà existants
@@ -242,6 +243,7 @@ editProductBtn.addEventListener('click', function(e) {
         //upload thumb
         let formData = new FormData();
         formData.append('id', productID);
+        formData.append('removedthumb', removedThumbList.join(','));
         productThumb.forEach((item, index) => {
             if (item.files[0]) {
                 //verify if file is image
@@ -334,4 +336,20 @@ function deleteOption(element, optionName) {
     });
     personalizeOptionTab.splice(personalizeOptionTab.indexOf(option), 1);
     element.parentElement.parentElement.remove();
+}
+
+
+// ############################################################################################################
+//                                      GESTION DE LA SUPPRESSION D'UNE MINIATURE
+// ############################################################################################################
+function removeThumb(element, index, e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let thumb = element.parentNode.parentNode.querySelector('.thumb-preview img')
+    thumb.src = '/public/img/vender-upload-thumb-preview.jpg';
+    if (productThumb[index].files[0]) {
+        productThumb[index].value = '';
+    } else {
+        removedThumbList.push(index)
+    }
 }

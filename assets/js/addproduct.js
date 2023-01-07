@@ -291,3 +291,15 @@ function deleteOption(element, optionName) {
     personalizeOptionTab.splice(personalizeOptionTab.indexOf(option), 1);
     element.parentElement.parentElement.remove();
 }
+
+// ############################################################################################################
+//                                      GESTION DE LA SUPPRESSION D'UNE MINIATURE
+// ############################################################################################################
+function removeThumb(element, index, e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let thumb = element.parentNode.parentNode.querySelector('.thumb-preview img')
+    thumb.src = '/public/img/vender-upload-thumb-preview.jpg';
+    productThumb[index].value = '';
+
+}

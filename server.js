@@ -311,37 +311,27 @@ app.get('/editproduct/:id', (req, res) => {
 
                                     let productThumbsHTML = '';
                                     let thumbs = fs.readdirSync(HOME + '/products-thumbs/' + id);
-                                    for (let i = 1; i < thumbs.length; i++) {
+                                    let sortThumbDisplay = [2, 3, 4, 5, 6, 1];
+                                    for (let i = 0; i < 6; i++) {
+                                        //thumbs -> ['19.0.png', '19.1.png', '19.2.png', '19.3.png']
+                                        let imgSrc = thumbs.find(thumb => parseInt(thumb.split('-')[1]) === sortThumbDisplay[i]) ? '/product/thumb/' + product.id + '-' + sortThumbDisplay[i] : '/public/img/vender-upload-thumb-preview.jpg';
+                                        //let imgSrc = thumbs.find(thumb => parseInt(thumb.split('-')[1]) === sortThumbDisplay[i - 1]) ? '/product/thumb/' + product.id + '-' + sortThumbDisplay[i - 1] : '/public/img/vender-upload-thumb-preview.jpg';
                                         productThumbsHTML += `
                                         <div class="thumb-upload">
                                             <div class="thumb-edit">
                                                 <input type='file' id="thumbUpload01" class="ec-image-upload" accept=".png, .jpg, .jpeg" />
-                                                <label for="imageUpload"><img src="/public/img/edit.svg"
-                                                        class="svg_img header_svg" alt="edit" /></label>
+                                                <label for="imageUpload"><img src="/public/img/edit.svg" class="svg_img header_svg" alt="edit" /></label>
                                             </div>
                                             <div class="thumb-preview ec-preview">
                                                 <div class="image-thumb-preview">
-                                                    <img class="image-thumb-preview ec-image-preview" src="/product/thumb/${product.id}-${i}" alt="preview">
+                                                    <img class="image-thumb-preview ec-image-preview" src="${imgSrc}" alt="preview">
                                                 </div>
+                                            </div>
+                                            <div class="thumb-remove">
+                                                <label for="imageUpload" onclick="removeThumb(this, ${sortThumbDisplay[i]}, event);"><img src="/public/img/remove.svg" class="svg_img header_svg" alt="edit"></label>
                                             </div>
                                         </div>
                                         `;
-                                    }
-                                    for (let i = thumbs.length; i < 7; i++) {
-                                        productThumbsHTML = `
-                                        <div class="thumb-upload">
-                                                    <div class="thumb-edit">
-                                                        <input type='file' id="thumbUpload01" class="ec-image-upload" accept=".png, .jpg, .jpeg" />
-                                                        <label for="imageUpload"><img src="/public/img/edit.svg"
-                                                                class="svg_img header_svg" alt="edit" /></label>
-                                                    </div>
-                                                    <div class="thumb-preview ec-preview">
-                                                        <div class="image-thumb-preview">
-                                                            <img class="image-thumb-preview ec-image-preview" src="/public/img/vender-upload-thumb-preview.jpg" alt="edit" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        ` + productThumbsHTML;
                                     }
 
                                     html = html.replace('{{productThumbs}}', productThumbsHTML);
@@ -899,14 +889,15 @@ app.post('/api/addproductthumb', (req, res) => {
                     // formData contains the file and the product id
                     let formData = req.files;
                     let id = escapeHTML(req.body.id);
-                    if (!formData) {
-                        res.json({
-                            error: false,
-                            success: 'Aucune image sélectionnée.',
-                            id: id
-                        });
-                        return;
-                    }
+                    let removedThumbsTab = escapeHTML(req.body.removedthumb).split(',');
+                    // if (!formData) {
+                    //     res.json({
+                    //         error: false,
+                    //         success: 'Aucune image sélectionnée.',
+                    //         id: id
+                    //     });
+                    //     return;
+                    // }
                     //verify if all fields are filled
                     if (!id) {
                         res.json({
@@ -922,7 +913,7 @@ app.post('/api/addproductthumb', (req, res) => {
                         return;
                     }
                     //add product thumb
-                    product.addProductThumb(formData, id).then((result) => {
+                    product.addProductThumb(formData, id, removedThumbsTab).then((result) => {
                         if (result) {
                             res.json({
                                 error: false,

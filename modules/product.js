@@ -49,9 +49,9 @@ let Product = class Product {
             });
         });
     }
-    addProductThumb(thumbs, id) {
+    addProductThumb(thumbs, id, removedThumbList) {
         return new Promise((resolve, reject) => {
-
+            let sortThumbDisplay = [2, 3, 4, 5, 6, 1];
             //upload thumbs in folder ./products-thumbs/ with id as name
             //check if folder with id exists
             if (!this.fs.existsSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id)) {
@@ -61,15 +61,30 @@ let Product = class Product {
             //     'thumb-0':{},
             //     'thumb-5':{},
             // }
-            Object.keys(thumbs).forEach((item, index) => {
-                let buffer = thumbs[item].data;
-                let thumbNum = parseInt(item.split('-')[1]) ? 7 - parseInt(item.split('-')[1]) : 0;
-                let name = id + '-' + thumbNum + '.' + thumbs[item].mimetype.split('/')[1];
-                this.fs.writeFileSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id + '/' + name : this.HOME + '/products-thumbs/' + id + '/' + name, buffer, (err) => {
-                    if (err) reject(err);
+            //remove thumbs in folder ./products-thumbs/ in removedThumbList
+            //removedThumbList is an array of int ex: [1, 5]
+            removedThumbList.forEach((item, index) => {
+                //checked if file exists
+                //check each file in folder ./products-thumbs/ with id as name
+                this.fs.readdirSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id : this.HOME + '/products-thumbs/' + id).forEach((file, index) => {
+                    if (parseInt(file.split('-')[1].split('.')[0]) == parseInt(item)) {
+                        //remove file
+                        this.fs.unlinkSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id + '/' + file : this.HOME + '/products-thumbs/' + id + '/' + file);
+                    }
                 });
-
             });
+            if (thumbs) {
+                Object.keys(thumbs).forEach((item, index) => {
+                    let buffer = thumbs[item].data;
+                    let thumbNum = parseInt(item.split('-')[1]) ? sortThumbDisplay[parseInt(item.split('-')[1]) - 1] : 0;
+                    let name = id + '-' + thumbNum + '.' + thumbs[item].mimetype.split('/')[1];
+                    this.fs.writeFileSync(this.HOME == __dirname ? this.HOME + '/../products-thumbs/' + id + '/' + name : this.HOME + '/products-thumbs/' + id + '/' + name, buffer, (err) => {
+                        if (err) reject(err);
+                    });
+
+                });
+            }
+
             resolve({ success: true });
 
         });
