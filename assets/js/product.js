@@ -134,7 +134,7 @@ fetch('/api/review/' + productID, {
 //                                     AJOUT D'UN COMMENTAIRE
 //############################################################################################################
 let commentInput = document.querySelector('textarea[name="your-comment"]');
-let commentSubmit = document.querySelector('button[type="submit"]');
+let commentSubmit = document.querySelector('button[type="submit"].add-comment-btn');
 
 //########################## APPEL AU SERVEUR POUR AJOUTER UN COMMENTAIRE ##############################
 commentSubmit.addEventListener('click', function(e) {
