@@ -706,9 +706,6 @@ app.get('/myorders', (req, res) => {
                                                 <td>${order.amount.toFixed(2)}€</td>
                                                 <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
                                                 <td>${statusHTML}</td>
-                                                <td class="text-right">
-                                                    <button class="btn btn-primary" onclick="window.location='/product/${parseInt(order.id)}';"><img height="20" width="20" src="/public/img/openin.svg" alt="Ouvrir" class="order-status"></button>
-                                                </td>
                                             </tr>
                                             `;
                                         if (index == orders.length - 1) {
