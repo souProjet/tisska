@@ -372,12 +372,24 @@ let Product = class Product {
             });
         });
     }
-    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment) {
+    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token) {
         return new Promise((resolve, reject) => {
-            this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}')`, (err, result) => {
-                if (err) reject(err);
-                resolve(result.insertId);
-            });
+            if (token) {
+                this.db.query(`SELECT private_key FROM users WHERE token='${token}'`, (err, result) => {
+                    if (err) reject(err);
+                    if (result.length == 1) {
+                        this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at, private_key) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}', '${result[0].private_key}')`, (err, result) => {
+                            if (err) reject(err);
+                            resolve(result.insertId);
+                        });
+                    }
+                });
+            } else {
+                this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}')`, (err, result) => {
+                    if (err) reject(err);
+                    resolve(result.insertId);
+                });
+            }
         });
     }
 

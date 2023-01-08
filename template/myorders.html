@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tiss'Ka - Mes commandes - Personnalisation textile et objets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+
+    <link rel="icon" href="/public/img/logo.png" sizes="851x851" />
+    <link rel="apple-touch-icon" href="/public/img/logo.png" />
+    <meta name="msapplication-TileImage" content="/public/img/logo.png" />
+
+    <link rel="stylesheet" href="/public/css/header.css">
+    <link rel="stylesheet" href="/public/css/footer.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
+    <link rel="stylesheet" href="/public/css/myorders.css">
+
+    <meta name="token" content="{{token}}">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+</head>
+
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-light ec-header-light" id="body">
+
+    {{header}}
+
+    <div class="wrapper">
+        <div class="ec-page-wrapper">
+
+            <div class="ec-content-wrapper">
+                <div class="content">
+
+
+                    <div class="row">
+                        <div class="col-12 p-b-15">
+                            <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                                <div class="card-header justify-content-between">
+                                    <h2>Mes commandes</h2>
+                                </div>
+                                <div class="card-body pt-0 pb-5">
+                                    <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom de la commande</th>
+                                                <th>Options</th>
+                                                <th>Date</th>
+                                                <th>Prix</th>
+                                                <th>Autres infos</th>
+                                                <th>Statut</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="orders-list-container">
+                                            {{orders}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{footer}}
+    <script src="/public/js/swiper-bundle.min.js"></script>
+    <script src="/public/js/cart-module.js"></script>
+    <script src="/public/js/myorders.js"></script>
+</body>
+
+</html>

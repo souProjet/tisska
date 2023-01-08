@@ -705,7 +705,8 @@ let CartModule = class CartModule {
                                                 email: emailInput.value,
                                                 amount: self.totalPrice,
                                                 comment: commentInput.value,
-                                                cart: cart
+                                                cart: cart,
+                                                token: document.querySelector('meta[name="token"]').getAttribute('content'),
                                             })
                                         }).then(response => response.json())
                                         .then(data => {

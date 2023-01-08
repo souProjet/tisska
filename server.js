@@ -102,7 +102,7 @@ app.get('/', (req, res) => {
 
                     html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                     html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                     html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                     <a class="ec-header-btn" onclick="window.location='/admin'">
                         <div class="header-icon">
@@ -216,7 +216,7 @@ app.get('/addproduct', (req, res) => {
                             html = html.replace(/{{header}}/g, fs.readFileSync(__dirname + '/template/header.html', 'utf8'));
                             html = html.replace(/{{footer}}/g, fs.readFileSync(__dirname + '/template/footer.html', 'utf8'));
                             html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                            html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                            html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                             html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                             <a class="ec-header-btn" onclick="window.location='/admin'">
                                 <div class="header-icon">
@@ -277,7 +277,7 @@ app.get('/editproduct/:id', (req, res) => {
                                     html = html.replace(/{{header}}/g, fs.readFileSync(__dirname + '/template/header.html', 'utf8'));
                                     html = html.replace(/{{footer}}/g, fs.readFileSync(__dirname + '/template/footer.html', 'utf8'));
                                     html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                                     html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                                     <a class="ec-header-btn" onclick="window.location='/admin'">
                                         <div class="header-icon">
@@ -408,7 +408,7 @@ app.get('/product/:id', (req, res) => {
 
                             html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                             html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                            html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                            html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                             html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                             <a class="ec-header-btn" onclick="window.location='/admin'">
                                 <div class="header-icon">
@@ -498,7 +498,7 @@ app.get('/checkout', (req, res) => {
 
                         html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                         html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                        html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                        html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
 
                         if (isAdmin) {
                             html = html.replace(/{{adminBtn}}/gm, `
@@ -543,7 +543,7 @@ app.get('/profile', (req, res) => {
                     html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                     html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
 
-                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                     html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                     <a class="ec-header-btn" onclick="window.location='/admin'">
                         <div class="header-icon">
@@ -602,7 +602,7 @@ app.get('/admin', (req, res) => {
 
                     html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
                     html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
-                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
                     html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
                     <a class="ec-header-btn" onclick="window.location='/admin'">
                         <div class="header-icon">
@@ -624,10 +624,6 @@ app.get('/admin', (req, res) => {
                             result[0].count = result[0].count || 0;
                             html = html.replace(/{{nbProducts}}/gm, result[0].count);
 
-                            //number of orders this month (created_at is VARCHAR in format dd/mm/yyyy)
-                            let date = new Date();
-                            let month = date.getMonth() + 1;
-                            let year = date.getFullYear();
                             db.query('SELECT COUNT(*) AS count FROM orders', (err, result) => {
                                 if (err) throw err;
                                 result[0].count = result[0].count || 0;
@@ -647,7 +643,86 @@ app.get('/admin', (req, res) => {
 
                     });
                 } else {
-                    res.redirect('/');
+                    res.sendFile(__dirname + '/template/404.html');
+                }
+            });
+        });
+    });
+});
+
+app.get('/myorders', (req, res) => {
+    let token = escapeHTML(req.cookies.token);
+    login.tokenIsValid(token).then((result) => {
+        login.getUser(token).then((user) => {
+            login.isAdmin(token).then((isAdmin) => {
+                if (result && user) {
+                    let html = fs.readFileSync(__dirname + '/template/myorders.html', 'utf8');
+                    html = html.replace(/{{header}}/g, fs.readFileSync(__dirname + '/template/header.html', 'utf8'));
+                    html = html.replace(/{{footer}}/g, fs.readFileSync(__dirname + '/template/footer.html', 'utf8'));
+
+                    html = html.replace(/{{token}}/gm, token);
+
+                    html = html.replace(/{{username}}/gm, '&nbsp;&nbsp;&nbsp;' + user.firstname + ' ' + user.lastname);
+                    html = html.replace(/{{avatarURL}}/gm, '/avatar/' + user.avatar);
+                    html = html.replace(/{{dropdownItems}}/gm, `<li><a class="dropdown-item" href="/profile">Mes informations</a></li><li><a class="dropdown-item" href="/myorders">Mes commandes</a></li><li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>`);
+                    html = html.replace(/{{adminBtn}}/gm, isAdmin ? `
+                    <a class="ec-header-btn" onclick="window.location='/admin'">
+                        <div class="header-icon">
+                            <img src="/public/img/stats.svg" class="svg_img header_svg" alt="">
+                        </div>
+                    </a>` : '');
+                    html = html.replace(/{{avatarLink}}/gm, '/');
+
+                    //get orders
+                    db.query('SELECT * FROM orders WHERE private_key = ?', [user.private_key], (err, result) => {
+                        if (err) throw err;
+                        let ordersHTML = '';
+                        let orders = result;
+                        if (orders.length == 0) {
+                            ordersHTML = '<p class="text-center">Aucune commande pour le moment</p>';
+                            html = html.replace(/{{orders}}/gm, ordersHTML);
+                            res.send(html);
+                            return;
+                        }
+                        orders.forEach((order, index) => {
+                            let cart = JSON.parse(order.cart);
+                            let orderName = '';
+                            cart.forEach((item, index2) => {
+                                db.query('SELECT * FROM products WHERE id = ?', [item.productID], (err, result) => {
+                                    if (err) throw err;
+                                    if (result.length == 0) return;
+                                    let product = result[0];
+                                    orderName += product.name + ' x' + item.quantity + ', ';
+                                    if (index2 == cart.length - 1) {
+                                        orderName = orderName.slice(0, -2);
+                                        let statusHTML = order.completed ? '<span class="badge badge-success">Expédié</span>' : '<span class="badge badge-warning">En attente d\'expédition</span>';
+                                        ordersHTML += `
+                                            <tr id="order-${order.id}">
+                                                <td>${orderName}</td>
+                                                <td>
+                                                    <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${orderName}\`)'>Options</a>
+                                                </td>
+                                                <td>${order.created_at}</td>
+                                                <td>${order.amount.toFixed(2)}€</td>
+                                                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
+                                                <td>${statusHTML}</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-primary" onclick="window.location='/product/${parseInt(order.id)}';"><img height="20" width="20" src="/public/img/openin.svg" alt="Ouvrir" class="order-status"></button>
+                                                </td>
+                                            </tr>
+                                            `;
+                                        if (index == orders.length - 1) {
+                                            html = html.replace(/{{orders}}/gm, ordersHTML);
+                                            res.send(html);
+                                        }
+                                    }
+                                });
+                            });
+
+                        });
+                    });
+                } else {
+                    res.sendFile(__dirname + '/template/404.html');
                 }
             });
         });
@@ -755,6 +830,8 @@ app.get('/api/user', (req, res) => {
     login.tokenIsValid(token).then((result) => {
         if (result) {
             login.getUser(token).then((result) => {
+                //supprimer la clef "private_key" de l'objet
+                delete result.private_key;
                 res.json(result);
             });
         } else {
@@ -1207,6 +1284,7 @@ app.post('/api/order', (req, res) => {
     let email = escapeHTML(req.body.email);
     let amount = parseFloat(req.body.amount);
     let comment = escapeHTML(req.body.comment);
+    let token = escapeHTML(req.body.token) || null;
 
     if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email) {
         res.json({
@@ -1216,7 +1294,7 @@ app.post('/api/order', (req, res) => {
     }
 
     //insert pending order in database
-    product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment).then((result) => {
+    product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token).then((result) => {
         if (result) {
             res.json({
                 error: false,

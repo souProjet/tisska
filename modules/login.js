@@ -95,7 +95,7 @@ let Login = class Login {
     getUser(token) {
         return new Promise((resolve, reject) => {
 
-            this.db.query(`SELECT cart,firstname,lastname,admin,avatar,address,city,zip,email FROM users WHERE token = '${token}'`, (err, result) => {
+            this.db.query(`SELECT private_key,cart,firstname,lastname,admin,avatar,address,city,zip,email FROM users WHERE token = '${token}'`, (err, result) => {
                 if (err) reject(err);
                 if (result.length > 0) {
                     if (!result[0].admin) {
