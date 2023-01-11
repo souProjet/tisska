@@ -686,35 +686,24 @@ app.get('/myorders', (req, res) => {
                         }
                         orders.forEach((order, index) => {
                             let cart = JSON.parse(order.cart);
-                            let orderName = '';
-                            cart.forEach((item, index2) => {
-                                db.query('SELECT * FROM products WHERE id = ?', [item.productID], (err, result) => {
-                                    if (err) throw err;
-                                    if (result.length == 0) return;
-                                    let product = result[0];
-                                    orderName += product.name + ' x' + item.quantity + ', ';
-                                    if (index2 == cart.length - 1) {
-                                        orderName = orderName.slice(0, -2);
-                                        let statusHTML = order.completed ? '<span class="badge badge-success">Expédié</span>' : '<span class="badge badge-warning">En attente d\'expédition</span>';
-                                        ordersHTML += `
-                                            <tr id="order-${order.id}">
-                                                <td>${orderName}</td>
-                                                <td>
-                                                    <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${orderName}\`)'>Options</a>
-                                                </td>
-                                                <td>${order.created_at}</td>
-                                                <td>${order.amount.toFixed(2)}€</td>
-                                                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
-                                                <td>${statusHTML}</td>
-                                            </tr>
-                                            `;
-                                        if (index == orders.length - 1) {
-                                            html = html.replace(/{{orders}}/gm, ordersHTML);
-                                            res.send(html);
-                                        }
-                                    }
-                                });
-                            });
+                            //orderName = orderName.slice(0, -2);
+                            let statusHTML = order.completed ? '<span class="badge badge-success">Expédié</span>' : '<span class="badge badge-warning">En attente d\'expédition</span>';
+                            ordersHTML += `
+                                <tr id="order-${order.id}">
+                                    <td>${order.ordername}</td>
+                                    <td>
+                                        <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${order.ordername}\`)'>Options</a>
+                                    </td>
+                                    <td>${order.created_at}</td>
+                                    <td>${order.amount.toFixed(2)}€</td>
+                                    <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
+                                    <td>${statusHTML}</td>
+                                </tr>
+                                `;
+                            if (index == orders.length - 1) {
+                                html = html.replace(/{{orders}}/gm, ordersHTML);
+                                res.send(html);
+                            }
 
                         });
                     });
@@ -1282,23 +1271,34 @@ app.post('/api/order', (req, res) => {
     let amount = parseFloat(req.body.amount);
     let comment = escapeHTML(req.body.comment);
     let token = escapeHTML(req.body.token) || null;
-
-    if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email) {
+    let orderName = escapeHTML(req.body.ordername);
+    if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email || !amount || !orderName) {
         res.json({
-            error: true
+            error: 'Des informations sont manquantes.'
         });
         return;
     }
-
-    //insert pending order in database
-    product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token).then((result) => {
-        if (result) {
+    //check if price is correct
+    product.checkPrice(cart, amount).then((result) => {
+        if (!result) {
             res.json({
-                error: false,
-                success: 'Commande effectuée avec succès.'
+                error: 'Erreur.'
+            });
+            return;
+        } else {
+
+            //insert pending order in database
+            product.addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token, orderName).then((result) => {
+                if (result) {
+                    res.json({
+                        error: false,
+                        success: 'Commande effectuée avec succès.'
+                    });
+                }
             });
         }
     });
+
 
 });
 
@@ -1352,6 +1352,28 @@ app.post('/profile/update', (req, res) => {
     });
 });
 
+app.get('/api/pendingsorders', (req, res) => {
+    let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
+    login.tokenIsValid(token).then((result) => {
+        login.isAdmin(token).then((isAdmin) => {
+            if (result && isAdmin) {
+                product.getPendingsOrders().then((result) => {
+                    if (result) {
+                        res.json({
+                            error: false,
+                            orders: result
+                        });
+                    }
+                });
+            } else {
+                res.json({
+                    error: 'Token invalide.'
+                });
+            }
+        });
+    });
+});
+
 app.get('/api/orders', (req, res) => {
     let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
     login.tokenIsValid(token).then((result) => {
@@ -1373,7 +1395,6 @@ app.get('/api/orders', (req, res) => {
         });
     });
 });
-
 app.put('/api/order/confirm/:id', (req, res) => {
     let token = escapeHTML(req.headers.authorization.replace('Bearer ', ''));
     let id = parseInt(escapeHTML(req.params.id));
@@ -1495,6 +1516,13 @@ app.post('/api/discount/add', (req, res) => {
 
 // 404 - Page not found
 app.use((req, res) => {
+    if (req.url.startsWith('/api') || req.method == 'POST') {
+        res.json({
+            error: 'Méthode inconnue.'
+        });
+        return;
+    }
+
     res.status(404).sendFile(__dirname + '/template/404.html');
 });
 

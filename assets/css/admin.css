@@ -2114,42 +2114,42 @@ progress {
 }
 
 .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: none;
+    -webkit-overflow-scrolling: none;
 }
 
 @media (max-width: 575.98px) {
     .table-responsive-sm {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: none;
+        -webkit-overflow-scrolling: none;
     }
 }
 
 @media (max-width: 767.98px) {
     .table-responsive-md {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: none;
+        -webkit-overflow-scrolling: none;
     }
 }
 
 @media (max-width: 991.98px) {
     .table-responsive-lg {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: none;
+        -webkit-overflow-scrolling: none;
     }
 }
 
 @media (max-width: 1199.98px) {
     .table-responsive-xl {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: none;
+        -webkit-overflow-scrolling: none;
     }
 }
 
 @media (max-width: 1499.98px) {
     .table-responsive-xxl {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: none;
+        -webkit-overflow-scrolling: none;
     }
 }
 

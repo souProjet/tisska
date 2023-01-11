@@ -124,7 +124,7 @@ function saveDiscount(element) {
 
 let ordersListContainer = document.querySelector('.orders-list-container');
 
-fetch('/api/orders', {
+fetch('/api/pendingsorders', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -143,45 +143,67 @@ fetch('/api/orders', {
         }
         orders.forEach(order => {
             let cart = JSON.parse(order.cart);
-            let orderName = '';
-            cart.forEach((item, index) => {
-                fetch('/api/product/' + item.productID, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    }).then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            console.log(data.error)
-                            return;
-                        }
-                        orderName += data.product.name + ' x' + item.quantity + ', ';
-
-                        if (index == cart.length - 1) {
-                            orderName = orderName.slice(0, -2);
-                            ordersListContainer.innerHTML += `
-                            <tr id="order-${order.id}">
-                                <td>${orderName}</td>
-                                <td>
-                                    <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${orderName}\`)'>Options</a>
-                                </td>
-                                <td>${order.created_at}</td>
-                                <td>${order.amount.toFixed(2)}€</td>
-                                <td>${order.firstname} ${order.lastname}</td>
-                                <td>${order.address}, ${order.city} ${order.zip}</td>
-                                <td>${order.email}</td>
-                                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
-                                <td class="text-right">
-                                    <button class="btn btn-primary" onclick="confirmOrder(${parseInt(order.id)})"><img height="20" width="20" src="/public/img/confirm.svg" alt="checked" class="order-status" ></button>
-                                </td>
-                            </tr>
-                            `;
-                        }
-                    });
-            });
+            //let orderName = '';
+            ordersListContainer.innerHTML += `
+            <tr id="order-${order.id}">
+                <td>${order.ordername}</td>
+                <td>
+                    <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${order.ordername}\`)'>Options</a>
+                </td>
+                <td>${order.created_at}</td>
+                <td>${order.amount.toFixed(2)}€</td>
+                <td>${order.firstname} ${order.lastname}</td>
+                <td>${order.address}, ${order.city} ${order.zip}</td>
+                <td>${order.email}</td>
+                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
+                <td class="text-right">
+                    <button class="btn btn-primary" onclick="confirmOrder(${parseInt(order.id)})"><img height="20" width="20" src="/public/img/confirm.svg" alt="checked" class="order-status" ></button>
+                </td>
+            </tr>
+            `;
         });
     });
+
+let historyOrdersListContainer = document.querySelector('.history-orders-list-container');
+
+fetch('/api/orders', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    }).then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.log(data.error)
+            return;
+        }
+        let orders = data.orders;
+        if (orders.length == 0) {
+            ordersListContainer.innerHTML = '<p class="text-center">Aucune commande pour le moment</p>';
+            return;
+        }
+
+        orders.forEach((order, index) => {
+            let cart = JSON.parse(order.cart);
+
+            historyOrdersListContainer.innerHTML += `
+            <tr class="${index%2==0?'even':'odd'}">
+                <td>${order.ordername}</td>
+                <td>
+                    <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${order.ordername}\`)'>Options</a>
+                </td>
+                <td>${order.amount.toFixed(2)}€</td>
+                <td>${order.firstname} ${order.lastname}</td>
+                <td>${order.address}, ${order.city} ${order.zip}</td>
+                <td>${order.email}</td>
+                <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
+                <td>${order.created_at}</td>
+            </tr>`;
+        });
+    });
+
+
 
 function confirmOrder(orderID) {
     fetch('/api/order/confirm/' + orderID, {
@@ -216,7 +238,7 @@ function openOptionModal(cart, orderName) {
     cart = JSON.parse(cart);
     let selectElements = '<select class="ec-modal-select" name="element">';
     cart.forEach((item, index) => {
-        selectElements += `<option value="${index}">${orderName.split(/x[0-9]\,?/)[index]}</option>`;
+        selectElements += `<option value="${index}">${orderName.split('-')[index]}</option>`;
     });
     selectElements += '</select><br><hr><br>';
 

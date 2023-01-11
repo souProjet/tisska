@@ -707,11 +707,12 @@ let CartModule = class CartModule {
                                                 comment: commentInput.value,
                                                 cart: cart,
                                                 token: document.querySelector('meta[name="token"]').getAttribute('content'),
+                                                ordername: orderName.substring(0, orderName.length - 3).replace('Commande : ', '').trim()
                                             })
                                         }).then(response => response.json())
                                         .then(data => {
                                             if (data.error) {
-                                                displayError.textContent = data.error;
+                                                displayError.textContent = data.error == 'Error.' ? 'Une erreur est survenue, veuillez réessayer.' : data.error;
                                                 payBtnStripe.innerHTML = 'Payer';
                                                 payBtnStripe.disabled = false;
                                             } else {

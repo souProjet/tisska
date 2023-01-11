@@ -84,7 +84,7 @@ function openOptionModal(cart, orderName) {
     cart = JSON.parse(cart);
     let selectElements = '<select class="ec-modal-select" name="element">';
     cart.forEach((item, index) => {
-        selectElements += `<option value="${index}">${orderName.split(/x[0-9]\,?/)[index]}</option>`;
+        selectElements += `<option value="${index}">${orderName.split('-')[index]}</option>`;
     });
     selectElements += '</select><br><hr><br>';
 

@@ -372,20 +372,20 @@ let Product = class Product {
             });
         });
     }
-    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token) {
+    addPendingOrder(cart, firstname, lastname, address, city, postalCode, email, amount, comment, token, orderName) {
         return new Promise((resolve, reject) => {
             if (token) {
                 this.db.query(`SELECT private_key FROM users WHERE token='${token}'`, (err, result) => {
                     if (err) reject(err);
                     if (result.length == 1) {
-                        this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at, private_key) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}', '${result[0].private_key}')`, (err, result) => {
+                        this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at, private_key, ordername) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}', '${result[0].private_key}', '${orderName}')`, (err, result) => {
                             if (err) reject(err);
                             resolve(result.insertId);
                         });
                     }
                 });
             } else {
-                this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}')`, (err, result) => {
+                this.db.query(`INSERT INTO orders (firstname, lastname, email, address, city, zip, cart, amount, comment, created_at, ordername) VALUES ('${firstname}', '${lastname}', '${email}', '${address}', '${city}', '${postalCode}', '${cart}', '${amount}','${comment}', '${new Date().toLocaleDateString()}', '${orderName}')`, (err, result) => {
                     if (err) reject(err);
                     resolve(result.insertId);
                 });
@@ -393,7 +393,7 @@ let Product = class Product {
         });
     }
 
-    getOrders() {
+    getPendingsOrders() {
         return new Promise((resolve, reject) => {
             this.db.query(`SELECT * FROM orders WHERE completed=0 ORDER BY id`, (err, result) => {
                 if (err) reject(err);
@@ -402,6 +402,14 @@ let Product = class Product {
         });
     }
 
+    getOrders() {
+        return new Promise((resolve, reject) => {
+            this.db.query(`SELECT * FROM orders WHERE completed=1 ORDER BY id`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
     confirmOrder(id) {
         return new Promise((resolve, reject) => {
             this.db.query(`UPDATE orders SET completed=1 WHERE id=${id}`, (err, result) => {
@@ -409,6 +417,105 @@ let Product = class Product {
                 resolve(result);
             });
         });
+    }
+
+    checkPrice(cart, amount) {
+        return new Promise((resolve, reject) => {
+            cart = JSON.parse(cart);
+
+            let cartSubTotal = 0;
+            let cartShipping = 0;
+            let cartTotal = 0;
+            let cartTotalWeight = 0;
+            let havePackage = false;
+
+            if (cart.length == 0) {
+                resolve(false)
+            } else {
+                cart.forEach((item, index) => {
+                    // fetch('/api/product/' + item.productID, {
+                    //         method: 'GET',
+                    //         headers: {
+                    //             'Content-Type': 'application/json',
+                    //         }
+                    //     }).then(response => response.json())
+                    //     .then(data => {
+                    this.db.query(`SELECT * FROM products WHERE id=${item.productID}`, (err, result) => {
+                        if (err) reject(err);
+                        if (result.length == 1) {
+                            let product = result[0];
+
+                            cartSubTotal += product.price * item.quantity;
+
+                            //si item.options est un tableau vide
+                            let optionPrice = 0;
+                            if (product.options != null && product.options != '') {
+                                if (item.options.length != 0) {
+                                    let options = item.options;
+                                    options.forEach(option => {
+                                        //pour chaque clé de l'objet option, on ajout de le prix de l'option associé dans product.options
+                                        for (const key in option) {
+                                            //product.options exemple : 'name,couleur[vert:0.00€-rouge:1.00€-bleu:1.00€-jaune:1.00€-bleu foncé:1.00€]'
+                                            //example : si option = {couleur: 'rouge'} alors optionPrice = 1.00€
+                                            if (key != 'name') {
+                                                optionPrice += parseFloat(product.options.split(',').find(op => op.includes(key)).split('[')[1].split(']')[0].split('|').find(op => op.indexOf(option[key]) > -1).split(':')[1].replace('€', ''));
+                                            }
+                                        }
+                                    });
+                                    cartSubTotal += optionPrice;
+                                }
+                            }
+                            cartTotalWeight += parseInt(product.weight) * item.quantity;
+                            if (JSON.parse(product.package)) {
+                                havePackage = true;
+                            }
+
+                            if (index == cart.length - 1) {
+                                cartShipping = this.shippingCost(havePackage, cartTotalWeight)
+                                cartTotal = cartShipping + cartSubTotal
+                                if (cartTotal == amount) {
+                                    resolve(true);
+                                }
+
+                            }
+                        }
+                    });
+
+
+                });
+
+
+            }
+        });
+
+    }
+
+    shippingCost(isPackage, weight) {
+        if (isPackage) {
+            if (weight > 0 && weight <= 250) {
+                return 5.10;
+            } else if (weight > 250 && weight <= 500) {
+                return 6.90;
+            } else if (weight > 500 && weight <= 700) {
+                return 7.90;
+            } else if (weight > 700 && weight <= 1000) {
+                return 8.50;
+            } else {
+                return 9.90;
+            }
+        } else {
+            if (weight > 0 && weight <= 20) {
+                return 1.90;
+            } else if (weight > 20 && weight <= 100) {
+                return 3.50;
+            } else if (weight > 100 && weight <= 250) {
+                return 4.90;
+            } else if (weight > 250 && weight <= 500) {
+                return 6.10;
+            } else {
+                return 7.50;
+            }
+        }
     }
 
 }
