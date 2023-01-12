@@ -123,7 +123,6 @@ function saveDiscount(element) {
 
 
 let ordersListContainer = document.querySelector('.orders-list-container');
-
 fetch('/api/pendingsorders', {
         method: 'GET',
         headers: {
@@ -141,6 +140,7 @@ fetch('/api/pendingsorders', {
             ordersListContainer.innerHTML = '<p class="text-center">Aucune commande pour le moment</p>';
             return;
         }
+
         orders.forEach(order => {
             let cart = JSON.parse(order.cart);
             //let orderName = '';
@@ -165,6 +165,8 @@ fetch('/api/pendingsorders', {
     });
 
 let historyOrdersListContainer = document.querySelector('.history-orders-list-container');
+let historyOrdersInfo = document.querySelector('.dataTables_info');
+let historyOrdersPagination = document.querySelector('.pagination-order-history');
 
 fetch('/api/orders', {
         method: 'GET',
@@ -183,8 +185,8 @@ fetch('/api/orders', {
             ordersListContainer.innerHTML = '<p class="text-center">Aucune commande pour le moment</p>';
             return;
         }
-
-        orders.forEach((order, index) => {
+        //forEach seulement sur les 10 dernières commandes
+        orders.filter((order, index) => index < 10).forEach((order, index) => {
             let cart = JSON.parse(order.cart);
 
             historyOrdersListContainer.innerHTML += `
@@ -201,6 +203,48 @@ fetch('/api/orders', {
                 <td>${order.created_at}</td>
             </tr>`;
         });
+
+        historyOrdersInfo.innerHTML = `Affichage de 1 à ${orders.length > 10 ? 10 : orders.length} sur ${orders.length} entrées`;
+
+        let nbPages = Math.ceil(orders.length / 10);
+        if (nbPages > 1) {
+            for (let i = 1; i <= nbPages; i++) {
+                historyOrdersPagination.innerHTML += `<li class="paginate_button paginate-btn-order-history page-item ${i==1?'active':''}"><a aria-controls="responsive-data-table" data-dt-idx="1" tabindex="0" class="page-link">${i}</a></li>`;
+            }
+            let paginateBtns = document.querySelectorAll('.paginate-btn-order-history');
+            paginateBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    let page = parseInt(e.target.innerHTML);
+                    historyOrdersListContainer.innerHTML = '';
+                    orders.filter((order, index) => index >= (page - 1) * 10 && index < page * 10).forEach((order, index) => {
+                        let cart = JSON.parse(order.cart);
+
+                        historyOrdersListContainer.innerHTML += `
+                        <tr class="${index%2==0?'even':'odd'}">
+                            <td>${order.ordername}</td>
+                            <td>
+                                <a class="btn" onclick='openOptionModal(\`${JSON.stringify(cart)}\`, \`${order.ordername}\`)'>Options</a>
+                            </td>
+                            <td>${order.amount.toFixed(2)}€</td>
+                            <td>${order.firstname} ${order.lastname}</td>
+                            <td>${order.address}, ${order.city} ${order.zip}</td>
+                            <td>${order.email}</td>
+                            <td><button class="btn btn-primary" onclick="alert(\`${escapeHTML(order.comment)}\`);">Voir</td>
+                            <td>${order.created_at}</td>
+                        </tr>`;
+                    });
+                    historyOrdersInfo.innerHTML = `Affichage de ${((page - 1) * 10) + 1} à ${page * 10 > orders.length ? orders.length : page * 10} sur ${orders.length} entrées`;
+                    paginateBtns.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                });
+            })
+        }
+
+
+
+
     });
 
 
