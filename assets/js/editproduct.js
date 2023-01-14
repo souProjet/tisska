@@ -1,3 +1,5 @@
+let loader = document.querySelector('.ec-loader');
+let loaderOverlay = document.querySelector('.ec-loader-overlay');
 //############################################################################################################
 //                                     FONCTIONS GÉNÉRIQUES
 //############################################################################################################
@@ -353,3 +355,12 @@ function removeThumb(element, index, e) {
         removedThumbList.push(index)
     }
 }
+
+window.addEventListener('load', function() {
+    loader.classList.add('hide');
+    loaderOverlay.classList.add('hide');
+    setTimeout(() => {
+        loader.remove();
+        loaderOverlay.remove();
+    }, 300);
+});

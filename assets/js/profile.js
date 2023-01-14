@@ -1,3 +1,5 @@
+let loader = document.querySelector('.ec-loader');
+let loaderOverlay = document.querySelector('.ec-loader-overlay');
 //############################################################################################################
 //                                     FONCTIONS GÉNÉRIQUES
 //############################################################################################################
@@ -156,4 +158,13 @@ closeBtn.addEventListener('click', function(e) {
     e.preventDefault();
     sideCartOverlay.style.display = 'none';
     sideCart.classList.remove('ec-open');
+});
+
+window.addEventListener('load', function() {
+    loader.classList.add('hide');
+    loaderOverlay.classList.add('hide');
+    setTimeout(() => {
+        loader.remove();
+        loaderOverlay.remove();
+    }, 300);
 });

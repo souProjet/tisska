@@ -1,3 +1,6 @@
+let loader = document.querySelector('.ec-loader');
+let loaderOverlay = document.querySelector('.ec-loader-overlay');
+
 //############################################################################################################
 //                                     FONCTIONS GÉNÉRIQUES
 //############################################################################################################
@@ -29,7 +32,14 @@ window.addEventListener('load', function() {
         total.innerHTML = summary.total.toFixed(2) + ' €';
         shipping.innerHTML = summary.shipping.toFixed(2) + ' €';
         discount.innerHTML = summary.discount;
+        loader.classList.add('hide');
+        loaderOverlay.classList.add('hide');
+        setTimeout(() => {
+            loader.remove();
+            loaderOverlay.remove();
+        }, 300);
     }, 1000);
+
 });
 
 let emailInput = document.querySelector('input[name="email"]');

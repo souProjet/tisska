@@ -1,3 +1,8 @@
+let loader = document.querySelector('.ec-loader');
+let loaderOverlay = document.querySelector('.ec-loader-overlay');
+
+
+
 //############################################################################################################
 //                                     FONCTIONS GÉNÉRIQUES
 //############################################################################################################
@@ -75,6 +80,15 @@ closeBtn.addEventListener('click', function(e) {
     sideCart.classList.remove('ec-open');
 });
 
+window.addEventListener('load', function() {
+    loader.classList.add('hide');
+    loaderOverlay.classList.add('hide');
+    setTimeout(() => {
+        loader.remove();
+        loaderOverlay.remove();
+    }, 300);
+});
+
 //gestion du changement de thème
 let themeSelect = document.querySelector('.theme-select');
 let productsContainer = document.querySelector('.ec-products-container');
@@ -121,6 +135,8 @@ themeSelect.addEventListener('change', function(e) {
             </div>`;
             });
             productsContainer.innerHTML += productsHTML;
+
+
         });
 
 });

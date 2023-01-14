@@ -1985,3 +1985,39 @@ button:focus {
     text-align: center;
     padding: 0 15px;
 }
+
+div.ec-loader {
+    margin: 0 auto;
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+}
+
+div.ec-loader img {
+    width: 200px;
+}
+
+.ec-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+}
+
+div.ec-loader.hide {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.ec-loader-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
