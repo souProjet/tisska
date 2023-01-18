@@ -538,10 +538,10 @@ let CartModule = class CartModule {
             }
         });
 
-        if (!optionsComplete) {
-            alert('Veuillez remplir toutes les options');
-            return false;
-        }
+        // if (!optionsComplete) {
+        //     alert('Veuillez remplir toutes les options');
+        //     return false;
+        // }
 
         window.location.href = '/checkout';
     }
