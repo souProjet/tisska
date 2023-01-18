@@ -152,7 +152,7 @@ let Product = class Product {
 
             this.db.query(`SELECT * FROM products WHERE id=${id}`, (err, result) => {
                 if (err) reject(err);
-                if (result.length == 0) resolve({ error: 'product not found' });
+                if (result.length == 0) resolve({ error: 'Product not found' });
                 resolve(result[0]);
             });
         });

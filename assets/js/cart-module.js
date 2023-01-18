@@ -257,6 +257,9 @@ let CartModule = class CartModule {
                                 this.cartTotal.innerHTML = cartTotal.toFixed(2) + ' €';
 
                             }
+                        } else {
+                            //si le produit n'existe plus, on le supprime du panier
+                            this.deleteProduct(item.productID);
                         }
                     });
 

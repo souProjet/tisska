@@ -1060,10 +1060,14 @@ app.get('/api/product/:productId', (req, res) => {
         return;
     }
     product.getProduct(productId).then((result) => {
-        if (result) {
+        if (result && !result.error) {
             res.json({
                 error: false,
                 product: result
+            });
+        } else {
+            res.json({
+                error: 'Erreur.'
             });
         }
     });
