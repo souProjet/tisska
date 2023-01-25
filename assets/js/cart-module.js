@@ -486,9 +486,10 @@ let CartModule = class CartModule {
                     let optionSelect = item.querySelectorAll('.ec-modal-option-select');
                     let optionNameInput = item.querySelector('.ec-modal-option-name-input');
                     let optionName = optionNameInput ? optionNameInput.value : '';
-                    let option = {
-                        name: optionName
-                    };
+                    let option = {};
+                    if (optionName) {
+                        option.name = optionName;
+                    }
                     optionSelect.forEach(item => {
                         option[item.name] = item.value;
                     });
@@ -538,10 +539,10 @@ let CartModule = class CartModule {
             }
         });
 
-        // if (!optionsComplete) {
-        //     alert('Veuillez remplir toutes les options');
-        //     return false;
-        // }
+        if (!optionsComplete) {
+            alert('Veuillez remplir toutes les options');
+            return false;
+        }
 
         window.location.href = '/checkout';
     }
