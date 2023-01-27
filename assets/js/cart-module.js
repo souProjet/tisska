@@ -671,6 +671,7 @@ let CartModule = class CartModule {
                 let cityInput = document.querySelector('input[name="city"]');
                 let postalCodeInput = document.querySelector('input[name="postalcode"]');
                 let commentInput = document.querySelector('textarea[name="comment"]');
+                let collectInput = document.querySelector('input[name="collect"]');
 
                 let payBtnStripe = document.querySelector('.pay-btn-stripe');
                 payBtnStripe.addEventListener('click', function(e) {
@@ -703,9 +704,9 @@ let CartModule = class CartModule {
                                             body: JSON.stringify({
                                                 firstname: firstnameInput.value,
                                                 lastname: lastnameInput.value,
-                                                address: addressInput.value,
-                                                city: cityInput.value,
-                                                postalcode: postalCodeInput.value,
+                                                address: collectInput.checked ? 'A retirer : 4 cité des pins' : addressInput.value,
+                                                city: collectInput.checked ? 'CHANVERRIE' : cityInput.value,
+                                                postalcode: collectInput.checked ? '85500' : postalCodeInput.value,
                                                 email: emailInput.value,
                                                 amount: self.totalPrice,
                                                 comment: commentInput.value,

@@ -49,6 +49,7 @@ let addressInput = document.querySelector('input[name="address"]');
 let cityInput = document.querySelector('input[name="city"]');
 let postalCodeInput = document.querySelector('input[name="postalcode"]');
 let commentInput = document.querySelector('textarea[name="comment"]');
+let collectInput = document.querySelector('input[name="collect"]');
 
 let displayError = document.getElementById('card-errors');
 
@@ -60,6 +61,19 @@ emailInput.addEventListener('keyup', function() {
         } else {
             displayError.innerHTML = '';
         }
+    }
+});
+
+collectInput.addEventListener('change', function() {
+    if (collectInput.checked) {
+        addressInput.parentElement.style.display = 'none';
+        cityInput.parentElement.style.display = 'none';
+        postalCodeInput.parentElement.style.display = 'none';
+    } else {
+        addressInput.parentElement.style.display = 'block';
+        cityInput.parentElement.style.display = 'block';
+        postalCodeInput.parentElement.style.display = 'block';
+
     }
 });
 
