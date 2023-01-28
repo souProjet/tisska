@@ -69,10 +69,14 @@ collectInput.addEventListener('change', function() {
         addressInput.parentElement.style.display = 'none';
         cityInput.parentElement.style.display = 'none';
         postalCodeInput.parentElement.style.display = 'none';
+        shipping.innerHTML = '0.00 €';
+        total.innerHTML = (cartModule.totalPrice - cartModule.summary.shipping).toFixed(2) + ' €';
     } else {
         addressInput.parentElement.style.display = 'block';
         cityInput.parentElement.style.display = 'block';
         postalCodeInput.parentElement.style.display = 'block';
+        shipping.innerHTML = cartModule.summary.shipping.toFixed(2) + ' €';
+        total.innerHTML = cartModule.totalPrice.toFixed(2) + ' €';
 
     }
 });

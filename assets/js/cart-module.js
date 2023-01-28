@@ -704,15 +704,16 @@ let CartModule = class CartModule {
                                             body: JSON.stringify({
                                                 firstname: firstnameInput.value,
                                                 lastname: lastnameInput.value,
-                                                address: collectInput.checked ? 'A retirer : 4 cité des pins' : addressInput.value,
-                                                city: collectInput.checked ? 'CHANVERRIE' : cityInput.value,
-                                                postalcode: collectInput.checked ? '85500' : postalCodeInput.value,
+                                                address: collectInput.checked ? 'A retirer' : addressInput.value,
+                                                city: collectInput.checked ? 'A retirer' : cityInput.value,
+                                                postalcode: collectInput.checked ? 'A retirer' : postalCodeInput.value,
                                                 email: emailInput.value,
-                                                amount: self.totalPrice,
+                                                amount: self.totalPrice - (collectInput.checked ? self.summary.shipping : 0),
                                                 comment: commentInput.value,
                                                 cart: cart,
                                                 token: document.querySelector('meta[name="token"]').getAttribute('content'),
-                                                ordername: orderName.substring(0, orderName.length - 3).replace('Commande : ', '').trim()
+                                                ordername: orderName.substring(0, orderName.length - 3).replace('Commande : ', '').trim(),
+                                                collect: collectInput.checked,
                                             })
                                         }).then(response => response.json())
                                         .then(data => {

@@ -419,7 +419,7 @@ let Product = class Product {
         });
     }
 
-    checkPrice(cart, amount) {
+    checkPrice(cart, amount, collect) {
         return new Promise((resolve, reject) => {
             cart = JSON.parse(cart);
 
@@ -473,6 +473,9 @@ let Product = class Product {
                             if (index == cart.length - 1) {
                                 cartShipping = this.shippingCost(havePackage, cartTotalWeight)
                                 cartTotal = cartShipping + cartSubTotal
+                                if (collect) {
+                                    cartTotal = cartTotal - cartShipping;
+                                }
                                 if (cartTotal == amount) {
                                     resolve(true);
                                 }

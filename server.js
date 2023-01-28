@@ -1276,6 +1276,7 @@ app.post('/api/order', (req, res) => {
     let comment = escapeHTML(req.body.comment);
     let token = escapeHTML(req.body.token) || null;
     let orderName = escapeHTML(req.body.ordername);
+    let collect = JSON.parse(req.body.collect);
     if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email || !amount || !orderName) {
         res.json({
             error: 'Des informations sont manquantes.'
@@ -1283,7 +1284,7 @@ app.post('/api/order', (req, res) => {
         return;
     }
     //check if price is correct
-    product.checkPrice(cart, amount).then((result) => {
+    product.checkPrice(cart, amount, collect).then((result) => {
         if (!result) {
             res.json({
                 error: 'Erreur.'
