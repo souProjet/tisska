@@ -1277,7 +1277,13 @@ app.post('/api/order', (req, res) => {
     let token = escapeHTML(req.body.token) || null;
     let orderName = escapeHTML(req.body.ordername);
     let collect = JSON.parse(req.body.collect);
-    if (!cart || !firstname || !lastname || !address || !city || !postalCode || !email || !amount || !orderName) {
+    if (!cart || !firstname || !lastname || !email || !amount || !orderName) {
+        res.json({
+            error: 'Des informations sont manquantes.'
+        });
+        return;
+    }
+    if (!collect && (!address || !city || !postalCode)) {
         res.json({
             error: 'Des informations sont manquantes.'
         });

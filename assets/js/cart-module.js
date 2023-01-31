@@ -676,68 +676,72 @@ let CartModule = class CartModule {
                 let payBtnStripe = document.querySelector('.pay-btn-stripe');
                 payBtnStripe.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (emailInput.value != '' && firstnameInput.value != '' && lastnameInput.value != '' && addressInput.value != '' && cityInput.value != '' && postalCodeInput.value != '' && emailInput.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) && postalCodeInput.value.length == 6 && postalCodeInput.value.match(/^[0-9 ]+$/)) {
+                    if (emailInput.value != '' && firstnameInput.value != '' && lastnameInput.value != '' && emailInput.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+                        if (collectInput || (postalCodeInput.value.length == 6 && postalCodeInput.value.match(/^[0-9 ]+$/) && addressInput.value != '' && cityInput.value != '' && postalCodeInput.value != '')) {
 
-                        if (payBtnStripe.disabled) return;
-                        payBtnStripe.innerHTML = 'Paiement en cours...';
-                        payBtnStripe.disabled = true;
-                        const result = stripe.confirmCardPayment(data.clientSecret, {
-                            payment_method: {
-                                card: card,
-                                billing_details: {
-                                    name: escapeHTML(firstnameInput.value) + ' ' + escapeHTML(lastnameInput.value),
-                                },
-                            }
-                        }).then(function(result) {
-                            if (result.error) {
-                                displayError.textContent = result.error.message;
-                                payBtnStripe.innerHTML = 'Payer';
-                                payBtnStripe.disabled = false;
-                            } else {
-                                // The payment has been processed!
-                                if (result.paymentIntent.status === 'succeeded') {
-                                    fetch('/api/order', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify({
-                                                firstname: firstnameInput.value,
-                                                lastname: lastnameInput.value,
-                                                address: collectInput.checked ? 'A retirer' : addressInput.value,
-                                                city: collectInput.checked ? 'A retirer' : cityInput.value,
-                                                postalcode: collectInput.checked ? 'A retirer' : postalCodeInput.value,
-                                                email: emailInput.value,
-                                                amount: self.totalPrice - (collectInput.checked ? self.summary.shipping : 0),
-                                                comment: commentInput.value,
-                                                cart: cart,
-                                                token: document.querySelector('meta[name="token"]').getAttribute('content'),
-                                                ordername: orderName.substring(0, orderName.length - 3).replace('Commande : ', '').trim(),
-                                                collect: collectInput.checked,
-                                            })
-                                        }).then(response => response.json())
-                                        .then(data => {
-                                            if (data.error) {
-                                                displayError.textContent = data.error == 'Error.' ? 'Une erreur est survenue, veuillez réessayer.' : data.error;
-                                                payBtnStripe.innerHTML = 'Payer';
-                                                payBtnStripe.disabled = false;
-                                            } else {
-                                                displaySuccess.textContent = 'Paiement réussi !';
-                                                self.cart = [];
-                                                self.updateCart(self.cart);
-                                                self.summary = {
-                                                    subtotal: 0,
-                                                    shipping: 0,
-                                                    discount: 0,
-                                                    total: 0
-                                                };
-                                                localStorage.setItem('discountCode', '');
-                                                window.location.href = '/checkout/success';
-                                            }
-                                        })
+                            if (payBtnStripe.disabled) return;
+                            payBtnStripe.innerHTML = 'Paiement en cours...';
+                            payBtnStripe.disabled = true;
+                            const result = stripe.confirmCardPayment(data.clientSecret, {
+                                payment_method: {
+                                    card: card,
+                                    billing_details: {
+                                        name: escapeHTML(firstnameInput.value) + ' ' + escapeHTML(lastnameInput.value),
+                                    },
                                 }
-                            }
-                        });
+                            }).then(function(result) {
+                                if (result.error) {
+                                    displayError.textContent = result.error.message;
+                                    payBtnStripe.innerHTML = 'Payer';
+                                    payBtnStripe.disabled = false;
+                                } else {
+                                    // The payment has been processed!
+                                    if (result.paymentIntent.status === 'succeeded') {
+                                        fetch('/api/order', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify({
+                                                    firstname: firstnameInput.value,
+                                                    lastname: lastnameInput.value,
+                                                    address: collectInput.checked ? 'A retirer' : addressInput.value,
+                                                    city: collectInput.checked ? 'A retirer' : cityInput.value,
+                                                    postalcode: collectInput.checked ? 'A retirer' : postalCodeInput.value,
+                                                    email: emailInput.value,
+                                                    amount: self.totalPrice - (collectInput.checked ? self.summary.shipping : 0),
+                                                    comment: commentInput.value,
+                                                    cart: cart,
+                                                    token: document.querySelector('meta[name="token"]').getAttribute('content'),
+                                                    ordername: orderName.substring(0, orderName.length - 3).replace('Commande : ', '').trim(),
+                                                    collect: collectInput.checked,
+                                                })
+                                            }).then(response => response.json())
+                                            .then(data => {
+                                                if (data.error) {
+                                                    displayError.textContent = data.error == 'Error.' ? 'Une erreur est survenue, veuillez réessayer.' : data.error;
+                                                    payBtnStripe.innerHTML = 'Payer';
+                                                    payBtnStripe.disabled = false;
+                                                } else {
+                                                    displaySuccess.textContent = 'Paiement réussi !';
+                                                    self.cart = [];
+                                                    self.updateCart(self.cart);
+                                                    self.summary = {
+                                                        subtotal: 0,
+                                                        shipping: 0,
+                                                        discount: 0,
+                                                        total: 0
+                                                    };
+                                                    localStorage.setItem('discountCode', '');
+                                                    window.location.href = '/checkout/success';
+                                                }
+                                            })
+                                    }
+                                }
+                            });
+                        } else {
+                            displayError.textContent = 'Veuillez remplir tous les champs';
+                        }
                     } else {
                         displayError.textContent = 'Veuillez remplir tous les champs';
                     }
